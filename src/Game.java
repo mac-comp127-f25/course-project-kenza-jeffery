@@ -4,14 +4,16 @@ import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Image;
 
 public class Game {
-    private File backgroundFile = new File("Gemini_Generated_Image_o2bfmoo2bfmoo2bf");
     private static CanvasWindow CANVASWINDOW;
-    private Image background = new Image("Gemini_Generated_Image_o2bfmoo2bfmoo2bf");
+    private static Background background;
     private Slingshot slingshot;
     private Coo currentCoo;
     private Level level;
     private Handler handler;
     private boolean isDragging;
 
-    
+    public static void main(String[] args) {
+        CanvasWindow CANVASWINDOW = new CanvasWindow("Game", 0, 0);
+        CANVASWINDOW.add(background.getBackground());
+    }
 }

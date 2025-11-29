@@ -3,17 +3,20 @@ import java.io.File;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Image;
 
+import java.awt.Color;
+
 public class Game {
-    private static CanvasWindow CANVASWINDOW;
+    private static CanvasWindow canvas = new CanvasWindow("Game", 1000, 800);;
     private static Background background;
-    private Slingshot slingshot;
+    private static Slingshot slingshot = new Slingshot(Color.BLACK);
     private Coo currentCoo;
     private Level level;
     private Handler handler;
     private boolean isDragging;
 
     public static void main(String[] args) {
-        CanvasWindow CANVASWINDOW = new CanvasWindow("Game", 0, 0);
-        CANVASWINDOW.add(background.getBackground());
+        canvas.add(background.getBackground());
+        canvas.add(slingshot.getShape());
+        canvas.draw();
     }
 }

@@ -9,4 +9,6 @@ public interface Entity {
     void setPosition(Vector2D v);
     void update(double dt);
     Rectangle getBounds();
+    double getMass();
+    boolean isDestroyed();
 }

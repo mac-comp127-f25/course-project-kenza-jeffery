@@ -11,6 +11,7 @@ public class Coo implements Entity {
     private double radius;
     private Vector2D velocity;
     private Ellipse coo;
+    private double mass;
 
     private double explosiveRadius;
     private int splitCount;
@@ -23,6 +24,7 @@ public class Coo implements Entity {
         coo = new Ellipse(cooX, cooY, radius * 2, radius * 2);
 
         this.velocity = new Vector2D(0, 0);
+        this.mass = cooType.getMass();
 
         switch(cooType){
             case explosiveCoo:
@@ -94,5 +96,13 @@ public class Coo implements Entity {
 
     public double getRadius(){
         return radius;
+    }
+
+    public double getMass(){
+        return mass;
+    }
+
+    public boolean isDestroyed(){
+        return false;
     }
 }

@@ -10,6 +10,7 @@ public class Box implements Entity {
     private double height;
     private double boxX;
     private double boxY;
+    private double mass;
     private Rectangle box;
 
     private CanvasWindow canvas;
@@ -22,6 +23,7 @@ public class Box implements Entity {
         this.boxX = boxX;
         this.boxY = boxY;
         this.canvas = canvas;
+        this.mass = materialType.getMass();
         hp = materialType.getHp();
         box = new Rectangle(boxX, boxY, width, height);
         this.velocity = new Vector2D(0, 0);
@@ -98,5 +100,9 @@ public class Box implements Entity {
 
     public boolean isDestroyed(){
         return isDestroyed;
+    }
+
+    public double getMass(){
+        return mass;
     }
 }

@@ -9,7 +9,6 @@ public class PhysicEngine {
     private List<Knight> knights = new ArrayList<>();
     private double timeStep = 0.016;
     
-
     public void addCoo(Coo coo){
         coos.add(coo);
     }
@@ -79,7 +78,21 @@ public class PhysicEngine {
     }
 
     public void resolveCollision(Entity entityA, Entity entityB){
+        if(entityA instanceof Coo && entityB instanceof Box){
+            resolveCircleRect((Coo)entityA, (Box)entityB);
+        }
 
+        if(entityA instanceof Box && entityB instanceof Coo){
+            resolveCircleRect((Coo)entityB, (Box)entityA);
+        }
+
+        if(entityA instanceof Coo && entityB instanceof Knight){
+            resolveCircleCircle((Coo)entityA, (Knight)entityB);
+        }
+
+        if(entityA instanceof Knight && entityB instanceof Coo){
+            resolveCircleCircle((Coo)entityB, (Knight)entityA);
+        }
     }
 
     public Vector2D reflectVelocity(Vector2D vector, Vector2D normalVector){
@@ -154,6 +167,103 @@ public class PhysicEngine {
                     resolveCollision(coo, box);
                 }
             }
+        }
+    }
+
+    public void resolveCircleCircle(Coo coo, Knight knight){
+        if(knight.isDestroyed()){
+            return;
+        }
+
+        Vector2D cooPos = coo.getPosition();
+        Vector2D knightPos = knight.getPosition();
+
+        Vector2D cooCenter = new Vector2D(
+            cooPos.getX() + coo.getRadius(), 
+            cooPos.getY() + coo.getRadius());
+        
+        Vector2D knightCenter = new Vector2D(
+            knightPos.getX() + knight.getRadius(), 
+            knightPos.getY() + knight.getRadius());
+        
+        Vector2D normal = knightCenter.sub(cooCenter).normalize();
+
+        Vector2D cooVel = coo.getVelocity();
+
+        double speed = cooVel.getMagnitude();
+        double force = speed * coo.getMass();
+        knight.takeDamage(force);
+
+        Vector2D newCooVelocity = this.reflectVelocity(cooVel, normal);
+        coo.setVelocity(newCooVelocity);
+
+        coo.update(0.016);
+        knight.update(0.016);
+        
+        double distance = cooCenter.sub(knightCenter).getMagnitude();
+        double overlap = coo.getRadius() + knight.getRadius() - distance;
+    
+        if(overlap > 0){
+            Vector2D push = normal.mul(overlap + 0.5);
+            coo.setPosition(coo.getPosition().add(push));
+        }
+    }
+
+    public void resolveCircleRect(Coo coo, Box box){
+        if(box.isDestroyed()){
+            return;
+        }
+
+        Vector2D cooVel = coo.getVelocity();
+
+        Vector2D cooPos = coo.getPosition();
+        Vector2D cooCenter = new Vector2D(
+            cooPos.getX() + coo.getRadius(), 
+            cooPos.getY() + coo.getRadius());
+        
+        Vector2D boxPos = box.getPosition();
+        Vector2D boxCenter = new Vector2D(
+            boxPos.getX() + box.getWidth() / 2.0, 
+            boxPos.getY() + box.getHeight() / 2.0);
+        
+        double angle = box.getAngle();
+        double cos = Math.cos(-angle);
+        double sin = Math.sin(-angle);
+
+        double localX = (cooCenter.getX() - boxCenter.getX()) * cos - (cooCenter.getY() - boxCenter.getY()) * sin;
+        double localY = (cooCenter.getX() - boxCenter.getX()) * sin + (cooCenter.getY() - boxCenter.getY()) * cos;
+
+        double halfWidth = box.getWidth() / 2.0;
+        double halfHeight = box.getHeight() / 2.0;
+
+        double closestX = Math.max(-halfWidth, Math.min(localX, halfWidth));
+        double closestY = Math.max(-halfHeight, Math.min(localY, halfHeight));
+
+        double deltaX = localX - closestX;
+        double deltaY = localY - closestY;
+        double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+        if(distance > coo.getRadius()){
+            return;
+        }
+
+        Vector2D normal = new Vector2D(deltaX, deltaY).normalize();
+        if(deltaX == 0 && deltaY == 0){
+            normal = new Vector2D(0, -1);
+        }
+
+        double speed = coo.getVelocity().getMagnitude();
+        double force = speed * coo.getMass();
+
+        box.takeDamage(force);
+
+        Vector2D newCooVelocity = reflectVelocity(cooVel, normal);
+        coo.setVelocity(newCooVelocity);
+
+        double overlap = coo.getRadius() - distance;
+        if(overlap > 0){
+            Vector2D push = normal.mul(overlap + 0.5);
+            coo.setPosition(coo.getPosition().add(push));
         }
     }
 }

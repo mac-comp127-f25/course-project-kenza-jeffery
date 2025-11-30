@@ -12,6 +12,7 @@ public class Knight implements Entity {
     private double hp;
     private double angle = 0;
     private Vector2D velocity;
+    private double mass;
 
     private boolean isDestroyed = false;
     private CanvasWindow canvas;
@@ -24,6 +25,7 @@ public class Knight implements Entity {
         this.knightX = knightX;
         this.knightY = knightY;
         this.radius = radius;
+        this.mass = knightType.getMass();
         this.hp = knightType.getHp();
 
         knight = new Ellipse(knightX, knightY, radius * 2, radius * 2);
@@ -109,5 +111,9 @@ public class Knight implements Entity {
 
     public double getRadius(){
         return radius;
+    }
+
+    public double getMass(){
+        return mass;
     }
 }

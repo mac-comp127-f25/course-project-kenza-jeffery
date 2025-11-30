@@ -13,8 +13,11 @@ public class Game {
     private Level level;
     private Handler handler;
     private boolean isDragging;
+    public static final int CANVAS_WIDTH = 1280;
+    public static final int CANVAS_HEIGHT = 720;
 
     public static void main(String[] args) {
+        canvas = new CanvasWindow("Angry Coo!", CANVAS_WIDTH, CANVAS_HEIGHT);
         canvas.add(background.getBackground());
         canvas.add(slingshot.getShape());
         canvas.draw();

@@ -12,20 +12,26 @@ public class Slingshot {
     private double maxStretch = 100;
     private GraphicsGroup shape;
 
-    public Slingshot(Color color){
+    public Slingshot(Color color, Color secondColor){
         shape = new GraphicsGroup();
 
         Rectangle base = new Rectangle(x, y, 37.5, 150);
         base.setStrokeColor(color);
         base.setFillColor(color);
 
-        Arc curve = new Arc(x, y - 38, 37.5, 75, 0, 180);
-        curve.setStrokeWidth(25);
+        Arc curve = new Arc(x + 1.5, y - 38, 35, 75, 0, 180);
+        curve.setStrokeWidth(22);
         curve.setRotation(180);
         curve.setStrokeColor(color);
 
+        Rectangle band = new Rectangle(x + 10, y - 60, 5, 30);
+        band.setStrokeColor(secondColor);
+        band.setFillColor(secondColor);
+        band.setRotation(90);
+
         shape.add(base);
         shape.add(curve);
+        shape.add(band);
     }
 
     public void setStretch(Vector2D dragPosition){

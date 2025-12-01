@@ -6,7 +6,8 @@ import edu.macalester.graphics.Image;
 import java.awt.Color;
 
 public class Game {
-    private static CanvasWindow canvas = new CanvasWindow("Game", 1000, 800);;
+   // private static CanvasWindow canvas = new CanvasWindow("Game", 1000, 800);;
+   private static CanvasWindow canvas;
     private static Background background;
     private static Slingshot slingshot = new Slingshot(Color.BLACK);
     private Coo currentCoo;
@@ -18,6 +19,7 @@ public class Game {
 
     public static void main(String[] args) {
         canvas = new CanvasWindow("Angry Coo!", CANVAS_WIDTH, CANVAS_HEIGHT);
+        background = new Background("images/Gemini_Generated_Image_asm55qasm55qasm5.png", CANVAS_WIDTH, CANVAS_HEIGHT);
         canvas.add(background.getBackground());
         canvas.add(slingshot.getShape());
         canvas.draw();

@@ -9,7 +9,7 @@ public class Game {
    // private static CanvasWindow canvas = new CanvasWindow("Game", 1000, 800);;
    private static CanvasWindow canvas;
     private static Background background;
-    private static Slingshot slingshot = new Slingshot(Color.BLACK);
+    private static Slingshot slingshot = new Slingshot(new Color(97,70,35));
     private Coo currentCoo;
     private Level level;
     private Handler handler;

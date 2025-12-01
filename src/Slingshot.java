@@ -15,12 +15,12 @@ public class Slingshot {
     public Slingshot(Color color){
         shape = new GraphicsGroup();
 
-        Rectangle base = new Rectangle(x, y, 10, 40);
+        Rectangle base = new Rectangle(x, y, 37.5, 150);
         base.setStrokeColor(color);
         base.setFillColor(color);
 
-        Arc curve = new Arc(x, y - 20, 20, 40, 0, 180);
-        curve.setStrokeWidth(3.5);
+        Arc curve = new Arc(x, y - 38, 37.5, 75, 0, 180);
+        curve.setStrokeWidth(25);
         curve.setRotation(180);
         curve.setStrokeColor(color);
 

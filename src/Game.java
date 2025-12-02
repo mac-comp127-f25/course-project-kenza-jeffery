@@ -23,16 +23,13 @@ public class Game {
     }
 
     public void runGame(){
-        this.addBackground(canvas, "images/Gemini_Generated_Image_asm55qasm55qasm5.png");
+        this.addBackground(canvas, "images/LongerBackground.png");
     }
 
     public void addBackground(CanvasWindow canvas, String imagePath){
         background = new Background(imagePath, CANVAS_WIDTH, CANVAS_HEIGHT);
-        background.setPosition(0, 0);
         background.setSize(1, 1);
-        background = new Background("images/Gemini_Generated_Image_asm55qasm55qasm5.png", CANVAS_WIDTH, CANVAS_HEIGHT);
         background.setPosition(-50, -200);
-        background.setSize(1, 1.1);
         canvas.add(background.getBackground());
         canvas.draw();
     }

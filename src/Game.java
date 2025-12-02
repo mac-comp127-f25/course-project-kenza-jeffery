@@ -21,6 +21,12 @@ public class Game {
         canvas = new CanvasWindow("Angry Coo!", CANVAS_WIDTH, CANVAS_HEIGHT);
         background = new Background("images/LongerBackground.png", CANVAS_WIDTH, CANVAS_HEIGHT);
         canvas.add(background.getBackground());
+        Image grass = new Image("images/Grass.png");
+        Image anotherGrass = new Image("images/Grass.png");
+        canvas.add(grass);
+        canvas.add(anotherGrass);
+        anotherGrass.setPosition(900, 650);
+        grass.setPosition(0, 650);
         canvas.add(slingshot.getShape());
         canvas.draw();
     }

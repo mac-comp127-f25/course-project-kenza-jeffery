@@ -1,5 +1,5 @@
-import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
+import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.Rectangle;
 
 public class Knight implements Entity {
@@ -13,14 +13,13 @@ public class Knight implements Entity {
     private double angle = 0;
     private Vector2D velocity;
     private double mass;
+    private GraphicsGroup knightGroup;
 
     private boolean isDestroyed = false;
-    private CanvasWindow canvas;
 
-    private double explosiveRadius;
+    private double explosiveRadius = 0;
 
-    public Knight(KnightType knightType, double knightX, double knightY, double radius, CanvasWindow canvas){
-        this.canvas = canvas;
+    public Knight(KnightType knightType, double knightX, double knightY, double radius){
         this.knightType = knightType;
         this.knightX = knightX;
         this.knightY = knightY;
@@ -40,7 +39,7 @@ public class Knight implements Entity {
                 break;
         }
 
-        canvas.add(knight);
+        knightGroup.add(knight);
     }
 
     public Vector2D getPosition(){
@@ -101,7 +100,6 @@ public class Knight implements Entity {
         hp -= force;
         if(hp <= 0){
             isDestroyed = true;
-            canvas.remove(knight);
         }
     }
 
@@ -115,5 +113,9 @@ public class Knight implements Entity {
 
     public double getMass(){
         return mass;
+    }
+
+    public GraphicsGroup getShape(){
+        return knightGroup;
     }
 }

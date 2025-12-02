@@ -1,3 +1,4 @@
+import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.Rectangle;
 
 public interface Entity {
@@ -11,4 +12,5 @@ public interface Entity {
     Rectangle getBounds();
     double getMass();
     boolean isDestroyed();
+    GraphicsGroup getShape();
 }

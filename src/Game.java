@@ -10,8 +10,8 @@ public class Game {
     private Handler handler;
     private PhysicEngine engine;
     private boolean isDragging;
-    public static final int CANVAS_WIDTH = 1280;
-    public static final int CANVAS_HEIGHT = 720;
+    public static final int CANVAS_WIDTH = 940;
+    public static final int CANVAS_HEIGHT = 700;
 
     public static void main(String[] args) {
         Game game = new Game();
@@ -30,6 +30,9 @@ public class Game {
         background = new Background(imagePath, CANVAS_WIDTH, CANVAS_HEIGHT);
         background.setPosition(0, 0);
         background.setSize(1, 1);
+        background = new Background("images/Gemini_Generated_Image_asm55qasm55qasm5.png", CANVAS_WIDTH, CANVAS_HEIGHT);
+        background.setPosition(-50, -200);
+        background.setSize(1, 1.1);
         canvas.add(background.getBackground());
         canvas.draw();
     }

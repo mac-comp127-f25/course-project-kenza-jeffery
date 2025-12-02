@@ -1,5 +1,5 @@
-import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
+import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.Rectangle;
 
 public class Coo implements Entity {
@@ -12,11 +12,12 @@ public class Coo implements Entity {
     private Vector2D velocity;
     private Ellipse coo;
     private double mass;
+    private GraphicsGroup cooGroup;
 
-    private double explosiveRadius;
-    private int splitCount;
+    private double explosiveRadius = 0;
+    private int splitCount = 0;
     
-    public Coo(CooType cooType, double cooX, double cooY, double radius, CanvasWindow canvas){
+    public Coo(CooType cooType, double cooX, double cooY, double radius){
         this.cooType = cooType;
         this.cooX = cooX;
         this.cooY = cooY;
@@ -37,11 +38,11 @@ public class Coo implements Entity {
                 break;
         }
 
-        canvas.add(coo);
+        cooGroup.add(coo);
     }
 
-    public Ellipse getShape(){
-        return coo;
+    public GraphicsGroup getShape(){
+        return cooGroup;
     }
 
     public Vector2D getVelocity(){

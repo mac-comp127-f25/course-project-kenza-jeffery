@@ -1,4 +1,4 @@
-import edu.macalester.graphics.CanvasWindow;
+import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.Rectangle;
 
 public class Box implements Entity {
@@ -12,27 +12,25 @@ public class Box implements Entity {
     private double boxY;
     private double mass;
     private Rectangle box;
-
-    private CanvasWindow canvas;
+    private GraphicsGroup boxGroup = new GraphicsGroup();
 
     private boolean isDestroyed = false;
 
-    public Box(MaterialType materialType, double boxX, double boxY, double width, double height, CanvasWindow canvas){
+    public Box(MaterialType materialType, double boxX, double boxY, double width, double height){
         this.width = width;
         this.height = height;
         this.boxX = boxX;
         this.boxY = boxY;
-        this.canvas = canvas;
         this.mass = materialType.getMass();
         hp = materialType.getHp();
         box = new Rectangle(boxX, boxY, width, height);
         this.velocity = new Vector2D(0, 0);
 
-        canvas.add(box);
+        boxGroup.add(box);
     }
 
-    public Rectangle getShape(){
-        return box;
+    public GraphicsGroup getShape(){
+        return boxGroup;
     }
 
     public double getX(){
@@ -90,7 +88,6 @@ public class Box implements Entity {
         hp -= force;
         if(hp <= 0){
             isDestroyed = true;
-            canvas.remove(box);
         }
     }
     

@@ -9,11 +9,13 @@ public class Game {
     private static Background background;
     private List<Level> levels = new ArrayList<>();
     private Slingshot slingshot;
+    private Coo coo;
+    private CooType cooType;
     private Handler handler;
     private PhysicEngine engine;
     private boolean isDragging;
-    public static final int CANVAS_WIDTH = 940;
-    public static final int CANVAS_HEIGHT = 700;
+    public static final int CANVAS_WIDTH = 1280;
+    public static final int CANVAS_HEIGHT = 720;
 
     public static void main(String[] args) {
         Game game = new Game();
@@ -21,6 +23,7 @@ public class Game {
     }
 
     public Game(){
+        coo = new Coo(CooType.regularCoo, 100, 100, 20);
         canvas = new CanvasWindow("Angry Coo!", CANVAS_WIDTH, CANVAS_HEIGHT);
     }
 
@@ -31,15 +34,16 @@ public class Game {
     public void addBackground(CanvasWindow canvas, String imagePath){
         background = new Background(imagePath, CANVAS_WIDTH, CANVAS_HEIGHT);
         background.setSize(1, 1);
-        background.setPosition(-50, -200);
+        background.setPosition(-120, 90);
         Image grass = new Image("images/Grass.png");
         Image anotherGrass = new Image("images/Grass.png");
         canvas.add(grass);
         canvas.add(anotherGrass);
-        anotherGrass.setPosition(900, 650);
+        anotherGrass.setPosition(900, 90);
         grass.setPosition(0, 650);
         canvas.add(background.getBackground());
         canvas.add(slingshot.getShape());
+        canvas.add(coo.getShape());
         canvas.draw();
     }
 

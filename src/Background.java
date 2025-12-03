@@ -16,7 +16,7 @@ public class Background {
         // background.add(grassImage);
 
         this.background = new Image(imagePath);
-        background.setPosition(0, 65);
+        background.setPosition(0, 0);
         background.setScale(CANVAS_WIDTH / background.getWidth(), CANVAS_HEIGHT / background.getHeight());
     }
 

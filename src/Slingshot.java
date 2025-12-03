@@ -24,7 +24,7 @@ public class Slingshot {
         curve.setRotation(180);
         curve.setStrokeColor(color);
 
-        Rectangle band = new Rectangle(x + 10, y - 60, 5, 30);
+        Rectangle band = new Rectangle(x + 15, y - 55, 5, 20);
         band.setStrokeColor(secondColor);
         band.setFillColor(secondColor);
         band.setRotation(90);

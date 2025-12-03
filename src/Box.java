@@ -23,7 +23,15 @@ public class Box implements Entity {
         this.mass = materialType.getMass();
         hp = materialType.getHp();
         box = new Rectangle(boxX, boxY, width, height);
-        box.setFillColor(Color.BLACK);
+        if (materialType == MaterialType.WOOD) {
+            box.setFillColor(new Color(121, 96, 37));
+        
+        } else if (materialType == MaterialType.STONE) {
+            box.setFillColor(new Color(129, 128, 125));
+        } else {
+            box.setFillColor(new Color(161, 237, 255));
+        }
+
         this.velocity = new Vector2D(0, 0);
     }
 

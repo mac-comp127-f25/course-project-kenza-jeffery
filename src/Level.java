@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.macalester.graphics.GraphicsGroup;
+import edu.macalester.graphics.Rectangle;
 
 public class Level {
     private List<Box> boxes = new ArrayList<>();
@@ -63,17 +64,36 @@ public class Level {
     }
 
     private void setupFirstLevel(){
-        Coo coo1 = new Coo(CooType.regularCoo, 200, 100, 20);
-        Box box1 = new Box(MaterialType.STONE, 1000, 600, 100, 20);
-        Box box2 = new Box(MaterialType.ICE, 1000, 500, 20, 100);
-        Box box3 = new Box(MaterialType.ICE, 1000, 500, 100, 20);
-        Box box4 = new Box(MaterialType.WOOD, 1100, 500, 20, 120);
-        Knight knight1 = new Knight(KnightType.basicKnight, 1030, 530, 30);
+        Coo coo1 = new Coo(CooType.regularCoo, 200, 180, 20);
+        Box box1 = new Box(MaterialType.WOOD, 1000, 680, 100, 20);
+        Box box2 = new Box(MaterialType.STONE, 1000, 580, 20, 120);
+        Box box3 = new Box(MaterialType.WOOD, 1000, 580, 100, 20);
+        Box box4 = new Box(MaterialType.STONE, 1100, 580, 20, 120);
+
+        Box box5 = new Box(MaterialType.WOOD, 950, 480, 20, 220);
+        Box box6 = new Box(MaterialType.WOOD, 1150, 480, 20, 220);
+        Box box7 = new Box(MaterialType.WOOD, 950, 480, 220, 20);
+
+        Box box8 = new Box(MaterialType.WOOD, 1000, 250, 20, 230);
+        Box box9 = new Box(MaterialType.WOOD, 1100, 250, 20, 230);
+        Box box10 = new Box(MaterialType.WOOD, 1000, 235, 120, 20);
+        Box box11 = new Box(MaterialType.WOOD, 1050, 205, 20, 30);
+
+        Knight knight1 = new Knight(KnightType.basicKnight, 1030, 520, 30);
         
         boxes.add(box1);
         boxes.add(box2);
         boxes.add(box3);
         boxes.add(box4);
+       
+        boxes.add(box5);
+        boxes.add(box6);
+        boxes.add(box7);
+
+        boxes.add(box8);
+        boxes.add(box9);
+        boxes.add(box10);
+        boxes.add(box11);
         
         knights.add(knight1);
 

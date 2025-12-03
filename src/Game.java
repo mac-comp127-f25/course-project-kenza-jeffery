@@ -92,7 +92,7 @@ public class Game {
         backgroundItems.add(grass);
         backgroundItems.add(anotherGrass);
         anotherGrass.setPosition(400, 640);
-        grass.setPosition(0, 640);
+        grass.setPosition(-50, 640);
         backgroundItems.add(background.getBackground());
         backgroundItems.add(slingshot.getShape());
         canvas.add(backgroundItems);

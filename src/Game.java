@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,14 +60,15 @@ public class Game {
 
     public void addBackground(CanvasWindow canvas, String imagePath){
         background = new Background(imagePath, CANVAS_WIDTH, CANVAS_HEIGHT);
+        slingshot = new Slingshot(new Color(97,70,35), Color.BLACK);
         background.setSize(1, 1);
-        background.setPosition(-120, 90);
+        background.setPosition(20, 100);
         Image grass = new Image("images/Grass.png");
         Image anotherGrass = new Image("images/Grass.png");
         canvas.add(grass);
         canvas.add(anotherGrass);
-        anotherGrass.setPosition(900, 90);
-        grass.setPosition(0, 650);
+        anotherGrass.setPosition(400, 640);
+        grass.setPosition(0, 640);
         canvas.add(background.getBackground());
         canvas.add(slingshot.getShape());
         canvas.add(coo.getShape());

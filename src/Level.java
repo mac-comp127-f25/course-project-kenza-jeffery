@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +6,6 @@ public class Level {
     private List<Coo> coos = new ArrayList<>();
     private List<Knight> knights = new ArrayList<>();
     private List<Entity> entities = new ArrayList<>();
-    private Slingshot slingshot = new Slingshot(new Color(97,70,35), Color.BLACK);
     DifLevel difLevel;
 
     public Level(DifLevel difLevel){
@@ -34,7 +32,7 @@ public class Level {
                 break;
         }
 
-        entities.addAll(boxes);
+        entities.addAll(coos);
         entities.addAll(knights);
         entities.addAll(boxes);
     }
@@ -55,12 +53,9 @@ public class Level {
         return entities;
     }
 
-    public Slingshot getSlingshot(){
-        return slingshot;
-    }
-
     private void setupFirstLevel(){
-
+        Coo coo1 = new Coo(CooType.regularCoo, 100, 100, 50);
+        coos.add(coo1);
     }
 
     private void setupSecondLevel(){

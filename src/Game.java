@@ -15,8 +15,8 @@ public class Game {
     private Level level;
     private PhysicEngine engine;
     private boolean isDragging;
-    public static final int CANVAS_WIDTH = 940;
-    public static final int CANVAS_HEIGHT = 700;
+    public static final int CANVAS_WIDTH = 1280;
+    public static final int CANVAS_HEIGHT = 720;
 
     private boolean isWin = false;
     private boolean isLoss = false;
@@ -30,26 +30,28 @@ public class Game {
     }
 
     public Game(){
-        coo = new Coo(CooType.regularCoo, 100, 100, 20);
         canvas = new CanvasWindow("Angry Coo!", CANVAS_WIDTH, CANVAS_HEIGHT);
         handler = new Handler(canvas);
         this.createLevels();
-        this.runGame();
+        this.addBackground(canvas, "images/LongerBackground.png");
+        level = new Level(DifLevel.first);
+        this.drawLevel(level, canvas);
     }
 
     public void runGame(){
         canvas.animate(() -> {
-            if(isLoss(level)){
-                text = new GraphicsText("You Lose!", textX, textY);
-                canvas.add(text);
-                return;
-            }
+            
+            // if(isLoss(level)){
+            //     text = new GraphicsText("You Lose!", textX, textY);
+            //     canvas.add(text);
+            //     return;
+            // }
 
-            if(isWin(level)){
-                text = new GraphicsText("You Win!", textX, textY);
-                canvas.add(text);
-                return;
-            }
+            // if(isWin(level)){
+            //     text = new GraphicsText("You Win!", textX, textY);
+            //     canvas.add(text);
+            //     return;
+            // }
             
             this.addBackground(canvas, "images/LongerBackground.png");
         });

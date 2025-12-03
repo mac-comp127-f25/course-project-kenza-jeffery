@@ -108,7 +108,7 @@ public class Game {
     }
 
     public void drawLevel(Level level, CanvasWindow canvas){
-        for(Entity entity : level.getEntities()){
+        for (Entity entity : level.getEntities()){
             canvas.add(entity.getShape());
         }
     }

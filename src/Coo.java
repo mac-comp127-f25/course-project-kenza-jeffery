@@ -27,6 +27,9 @@ public class Coo implements Entity {
         this.cooX = cooX;
         this.cooY = cooY;
         this.radius = radius;
+        this.velocity = new Vector2D(0, 0);
+        this.mass = cooType.getMass();
+
         fullCoo = new GraphicsGroup(cooX, cooY);
         coo = new Ellipse(cooX, cooY, radius * 3, radius * 3);
         image = new Image("images/HighlandCowCropped.png");
@@ -36,8 +39,6 @@ public class Coo implements Entity {
         fullCoo.add(coo);
         fullCoo.add(image);
         coo.setFillColor(Color.BLUE);
-        this.velocity = new Vector2D(0, 0);
-        this.mass = cooType.getMass();
 
         switch(cooType){
             case explosiveCoo:

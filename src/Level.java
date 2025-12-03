@@ -64,7 +64,7 @@ public class Level {
     }
 
     private void setupFirstLevel(){
-        Coo coo1 = new Coo(CooType.regularCoo, 200, 180, 20);
+        Coo coo1 = new Coo(CooType.regularCoo, 45, 320, 20);
         Box box1 = new Box(MaterialType.WOOD, 1000, 680, 100, 20);
         Box box2 = new Box(MaterialType.STONE, 1000, 580, 20, 120);
         Box box3 = new Box(MaterialType.WOOD, 1000, 580, 100, 20);

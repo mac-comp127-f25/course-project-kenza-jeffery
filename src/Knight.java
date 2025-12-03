@@ -1,6 +1,8 @@
 import java.awt.Color;
 
 import edu.macalester.graphics.Ellipse;
+import edu.macalester.graphics.GraphicsGroup;
+import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Rectangle;
 
 public class Knight implements Entity {
@@ -14,6 +16,8 @@ public class Knight implements Entity {
     private double angle = 0;
     private Vector2D velocity;
     private double mass;
+    private GraphicsGroup fullKnight;
+    private Image image;
 
     private boolean isDestroyed = false;
 
@@ -27,8 +31,15 @@ public class Knight implements Entity {
         this.mass = knightType.getMass();
         this.hp = knightType.getHp();
 
-        knight = new Ellipse(knightX, knightY, radius * 2, radius * 2);
+        fullKnight = new GraphicsGroup(knightX, knightY);
+        knight = new Ellipse(knightX, knightY, radius * 3, radius * 3);
+        image = new Image("images/KnightCropped.png");
+        image.setPosition(knightX, knightY);
+        image.setMaxHeight(radius * 3);
+        image.setMaxWidth(radius * 3);
         knight.setFillColor(new Color(232, 155, 229));
+        fullKnight.add(knight);
+        fullKnight.add(image);
 
         velocity = new Vector2D(0, 0);
 
@@ -114,7 +125,7 @@ public class Knight implements Entity {
         return mass;
     }
 
-    public Ellipse getShape(){
-        return knight;
+    public GraphicsGroup getShape(){
+        return fullKnight;
     }
 }

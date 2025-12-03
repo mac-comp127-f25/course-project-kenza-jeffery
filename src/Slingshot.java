@@ -5,7 +5,7 @@ import java.awt.Color;
 import edu.macalester.graphics.Rectangle;
 
 public class Slingshot {
-    private int x = 100;
+    private int x = 185;
     private int y = 550;
     private Vector2D stretch = new Vector2D(0, 0);
     private Vector2D anchor = new Vector2D(x + 10, y);

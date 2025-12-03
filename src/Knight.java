@@ -13,7 +13,7 @@ public class Knight implements Entity {
     private double angle = 0;
     private Vector2D velocity;
     private double mass;
-    private GraphicsGroup knightGroup;
+    private GraphicsGroup knightGroup = new GraphicsGroup();
 
     private boolean isDestroyed = false;
 

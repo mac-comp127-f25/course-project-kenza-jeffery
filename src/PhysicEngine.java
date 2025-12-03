@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PhysicEngine {
-
     private Vector2D gravity = new Vector2D(0, 200);
     private List<Box> boxes = new ArrayList<>();
     private List<Coo> coos = new ArrayList<>();
@@ -204,7 +203,7 @@ public class PhysicEngine {
         double overlap = coo.getRadius() + knight.getRadius() - distance;
     
         if(overlap > 0){
-            Vector2D push = normal.mul(overlap + 0.5);
+            Vector2D push = normal.mul(-(overlap + 0.5));
             coo.setPosition(coo.getPosition().add(push));
         }
     }

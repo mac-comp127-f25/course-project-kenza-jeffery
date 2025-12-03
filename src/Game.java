@@ -2,33 +2,57 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.macalester.graphics.CanvasWindow;
+import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Image;
 
 public class Game {
-   private static CanvasWindow canvas;
+    private static CanvasWindow canvas;
     private static Background background;
     private List<Level> levels = new ArrayList<>();
     private Slingshot slingshot;
     private Coo coo;
-    private CooType cooType;
     private Handler handler;
+    private Level level;
     private PhysicEngine engine;
     private boolean isDragging;
-    public static final int CANVAS_WIDTH = 1280;
-    public static final int CANVAS_HEIGHT = 720;
+    public static final int CANVAS_WIDTH = 940;
+    public static final int CANVAS_HEIGHT = 700;
+
+    private boolean isWin = false;
+    private boolean isLoss = false;
+
+    private GraphicsText text;
+    private double textX;
+    private double textY;
 
     public static void main(String[] args) {
-        Game game = new Game();
-        game.runGame();
+        new Game();
     }
 
     public Game(){
         coo = new Coo(CooType.regularCoo, 100, 100, 20);
         canvas = new CanvasWindow("Angry Coo!", CANVAS_WIDTH, CANVAS_HEIGHT);
+        handler = new Handler(canvas);
+        this.createLevels();
+        this.runGame();
     }
 
     public void runGame(){
-        this.addBackground(canvas, "images/LongerBackground.png");
+        canvas.animate(() -> {
+            if(isLoss(level)){
+                text = new GraphicsText("You Lose!", textX, textY);
+                canvas.add(text);
+                return;
+            }
+
+            if(isWin(level)){
+                text = new GraphicsText("You Win!", textX, textY);
+                canvas.add(text);
+                return;
+            }
+            
+            this.addBackground(canvas, "images/LongerBackground.png");
+        });
     }
 
     public void addBackground(CanvasWindow canvas, String imagePath){
@@ -59,5 +83,19 @@ public class Game {
         for(Entity entity : level.getEntities()){
             canvas.add(entity.getShape());
         }
+    }
+
+    public boolean isWin(Level level){
+        if(level.getKnights().isEmpty()){
+            isWin = true;
+        }
+        return isWin;
+    }
+
+    private boolean isLoss(Level level){
+        if(level.getCoos().isEmpty()){
+            isLoss = true;
+        }
+        return isLoss;
     }
 }

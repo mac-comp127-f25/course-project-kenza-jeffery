@@ -12,7 +12,8 @@ public class Coo implements Entity {
     private Vector2D velocity;
     private Ellipse coo;
     private double mass;
-    private GraphicsGroup cooGroup;
+    private boolean isDestroyed = false;
+    private GraphicsGroup cooGroup = new GraphicsGroup();
 
     private double explosiveRadius = 0;
     private int splitCount = 0;
@@ -104,6 +105,6 @@ public class Coo implements Entity {
     }
 
     public boolean isDestroyed(){
-        return false;
+        return isDestroyed;
     }
 }

@@ -34,7 +34,9 @@ public class Level {
                 break;
         }
 
-        entities.addAll(entities);
+        entities.addAll(boxes);
+        entities.addAll(knights);
+        entities.addAll(boxes);
     }
 
     public List<Box> getBoxes(){

@@ -1,5 +1,6 @@
+import java.awt.Color;
+
 import edu.macalester.graphics.Ellipse;
-import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.Rectangle;
 
 public class Coo implements Entity {
@@ -13,7 +14,6 @@ public class Coo implements Entity {
     private Ellipse coo;
     private double mass;
     private boolean isDestroyed = false;
-    private GraphicsGroup cooGroup = new GraphicsGroup();
 
     private double explosiveRadius = 0;
     private int splitCount = 0;
@@ -24,7 +24,7 @@ public class Coo implements Entity {
         this.cooY = cooY;
         this.radius = radius;
         coo = new Ellipse(cooX, cooY, radius * 2, radius * 2);
-
+        coo.setFillColor(Color.BLUE);
         this.velocity = new Vector2D(0, 0);
         this.mass = cooType.getMass();
 
@@ -38,12 +38,10 @@ public class Coo implements Entity {
             default:
                 break;
         }
-
-        cooGroup.add(coo);
     }
 
-    public GraphicsGroup getShape(){
-        return cooGroup;
+    public Ellipse getShape(){
+        return coo;
     }
 
     public Vector2D getVelocity(){

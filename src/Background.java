@@ -1,4 +1,3 @@
-import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.Image;
 
 public class Background {

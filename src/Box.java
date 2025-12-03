@@ -1,4 +1,4 @@
-import edu.macalester.graphics.GraphicsGroup;
+import java.awt.Color;
 import edu.macalester.graphics.Rectangle;
 
 public class Box implements Entity {
@@ -12,7 +12,6 @@ public class Box implements Entity {
     private double boxY;
     private double mass;
     private Rectangle box;
-    private GraphicsGroup boxGroup = new GraphicsGroup();
 
     private boolean isDestroyed = false;
 
@@ -24,13 +23,12 @@ public class Box implements Entity {
         this.mass = materialType.getMass();
         hp = materialType.getHp();
         box = new Rectangle(boxX, boxY, width, height);
+        box.setFillColor(Color.BLACK);
         this.velocity = new Vector2D(0, 0);
-
-        boxGroup.add(box);
     }
 
-    public GraphicsGroup getShape(){
-        return boxGroup;
+    public Rectangle getShape(){
+        return box;
     }
 
     public double getX(){

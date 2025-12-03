@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.macalester.graphics.CanvasWindow;
+import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Image;
 
@@ -29,6 +30,8 @@ public class Game {
 
     private boolean isDragging = false;
 
+    private GraphicsGroup backgroundItems = new GraphicsGroup();
+
 
     private GraphicsText text;
     private double textX;
@@ -51,13 +54,13 @@ public class Game {
 
     public Game(){
         canvas = new CanvasWindow("Angry Coo!", CANVAS_WIDTH, CANVAS_HEIGHT);
-        handler = new Handler(canvas);
-        //this.createLevels();
         this.addBackground(canvas, "images/LongerBackground.png");
+        //handler = new Handler(canvas);
+        //this.createLevels();
         level = new Level(DifLevel.first);
-        this.drawLevel(level, canvas);
-        this.runGame();
-
+        canvas.add(level.getEntityGroup());
+        canvas.draw();
+        //this.runGame();
     }
 
     public void runGame(){
@@ -86,13 +89,13 @@ public class Game {
         background.setPosition(20, 100);
         Image grass = new Image("images/Grass.png");
         Image anotherGrass = new Image("images/Grass.png");
-        canvas.add(grass);
-        canvas.add(anotherGrass);
+        backgroundItems.add(grass);
+        backgroundItems.add(anotherGrass);
         anotherGrass.setPosition(400, 640);
         grass.setPosition(0, 640);
-        canvas.add(background.getBackground());
-        canvas.add(slingshot.getShape());
-        canvas.add(coo.getShape());
+        backgroundItems.add(background.getBackground());
+        backgroundItems.add(slingshot.getShape());
+        canvas.add(backgroundItems);
         canvas.draw();
     }
 

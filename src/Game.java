@@ -5,6 +5,10 @@ import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Image;
 
+import java.awt.event.MouseEvent;
+import edu.macalester.graphics.ui.Button;
+
+
 public class Game {
     private static CanvasWindow canvas;
     private static Background background;
@@ -14,16 +18,31 @@ public class Game {
     private Handler handler;
     private Level level;
     private PhysicEngine engine;
-    private boolean isDragging;
+
     public static final int CANVAS_WIDTH = 1280;
     public static final int CANVAS_HEIGHT = 720;
 
     private boolean isWin = false;
     private boolean isLoss = false;
+    private MouseEvent event;
+
+    private boolean isDragging = false;
+
 
     private GraphicsText text;
     private double textX;
     private double textY;
+
+    private Button nextGame = new Button("Next Game");
+    private Button resetLevel = new Button("New Game");
+    private Button Level1 = new Button("Level 1");
+    private Button Level2 = new Button("Level 2");
+    private Button Level3 = new Button("Level 3");
+    private Button Level4 = new Button("Level 4");
+    private Button Level5 = new Button("Level 5");
+
+    private double levelButtonBeginX;
+    private double levelButtonBeginY;
 
     public static void main(String[] args) {
         new Game();
@@ -32,26 +51,28 @@ public class Game {
     public Game(){
         canvas = new CanvasWindow("Angry Coo!", CANVAS_WIDTH, CANVAS_HEIGHT);
         handler = new Handler(canvas);
-        this.createLevels();
+        //this.createLevels();
         this.addBackground(canvas, "images/LongerBackground.png");
         level = new Level(DifLevel.first);
         this.drawLevel(level, canvas);
+        this.runGame();
+
     }
 
     public void runGame(){
         canvas.animate(() -> {
             
-            // if(isLoss(level)){
-            //     text = new GraphicsText("You Lose!", textX, textY);
-            //     canvas.add(text);
-            //     return;
-            // }
+            if(isLoss(level)){
+                text = new GraphicsText("You Lose!", textX, textY);
+                canvas.add(text);
+                return;
+            }
 
-            // if(isWin(level)){
-            //     text = new GraphicsText("You Win!", textX, textY);
-            //     canvas.add(text);
-            //     return;
-            // }
+            if(isWin(level)){
+                text = new GraphicsText("You Win!", textX, textY);
+                canvas.add(text);
+                return;
+            }
             
             this.addBackground(canvas, "images/LongerBackground.png");
         });

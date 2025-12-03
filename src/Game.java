@@ -2,11 +2,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.macalester.graphics.CanvasWindow;
+import edu.macalester.graphics.Image;
 
 public class Game {
    private static CanvasWindow canvas;
     private static Background background;
     private List<Level> levels = new ArrayList<>();
+    private Slingshot slingshot;
     private Handler handler;
     private PhysicEngine engine;
     private boolean isDragging;
@@ -30,6 +32,12 @@ public class Game {
         background = new Background(imagePath, CANVAS_WIDTH, CANVAS_HEIGHT);
         background.setSize(1, 1);
         background.setPosition(-50, -200);
+        Image grass = new Image("images/Grass.png");
+        Image anotherGrass = new Image("images/Grass.png");
+        canvas.add(grass);
+        canvas.add(anotherGrass);
+        anotherGrass.setPosition(900, 650);
+        grass.setPosition(0, 650);
         canvas.add(background.getBackground());
         canvas.add(slingshot.getShape());
         canvas.draw();

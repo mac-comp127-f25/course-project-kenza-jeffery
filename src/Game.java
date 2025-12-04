@@ -39,7 +39,7 @@ public class Game {
     private Button Level4 = new Button("Level 4");
     private Button Level5 = new Button("Level 5");
 
-    private double levelButtonBeginX = 1200;
+    private double levelButtonBeginX = 1150;
     private double levelButtonBeginY = 50;
 
     private int currentLevelIndex = 0;

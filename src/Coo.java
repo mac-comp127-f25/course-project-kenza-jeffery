@@ -31,11 +31,11 @@ public class Coo implements Entity {
         this.mass = cooType.getMass();
 
         fullCoo = new GraphicsGroup(cooX, cooY);
-        coo = new Ellipse(cooX, cooY, radius * 3, radius * 3);
+        coo = new Ellipse(0, 0, radius * 2, radius * 2);
         image = new Image("images/HighlandCowCropped.png");
-        image.setPosition(cooX, cooY);
-        image.setMaxHeight(radius * 3);
-        image.setMaxWidth(radius * 3);
+        image.setPosition(0, 0);
+        image.setMaxHeight(radius * 2);
+        image.setMaxWidth(radius * 2);
         fullCoo.add(coo);
         fullCoo.add(image);
         coo.setFillColor(Color.BLUE);
@@ -80,14 +80,14 @@ public class Coo implements Entity {
         cooX = v.getX();
         cooY = v.getY();
 
-        coo.setPosition(cooX, cooY);
+        fullCoo.setPosition(cooX, cooY);
     }
 
     public void update(double dt){
         cooX += velocity.getX() * dt;
         cooY += velocity.getY() * dt;
 
-        coo.setPosition(cooX, cooY);
+        fullCoo.setPosition(cooX, cooY);
     }
 
     public Rectangle getBounds(){
@@ -116,5 +116,10 @@ public class Coo implements Entity {
 
     public boolean isDestroyed(){
         return isDestroyed;
+    }
+
+    public void moveTo(double x, double y){
+        cooX = x; 
+        cooY = y;
     }
 }

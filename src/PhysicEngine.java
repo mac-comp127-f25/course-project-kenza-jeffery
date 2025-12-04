@@ -12,6 +12,18 @@ public class PhysicEngine {
         coos.add(coo);
     }
 
+    public void setCoos(List<Coo> cooList){
+        coos = cooList;
+    }
+
+    public void setKnights(List<Knight> knightList){
+        knights = knightList;
+    }
+
+    public void setBoxes(List<Box> boxList){
+        boxes = boxList;
+    }
+
     public void addBox(Box box){
         boxes.add(box);
     }
@@ -35,20 +47,31 @@ public class PhysicEngine {
     public void update(){
         for(Coo coo : coos){
             this.integrate(coo);
+            this.checkGroundCollision(coo);
         }
 
         for(Knight knight : knights){
-            this.integrate(knight);
+            if(!knight.isStatic()){
+                this.integrate(knight);
+                this.checkGroundCollision(knight);
+            }
         }
 
         for(Box box : boxes){
-            this.integrate(box);
+            if(!box.isStatic()){
+                this.integrate(box);
+                this.checkGroundCollision(box);
+            }
         }
 
         this.checkCollision();
+
+        coos.removeIf(Coo::isDestroyed);
+        knights.removeIf(Knight::isDestroyed);
+        boxes.removeIf(Box::isDestroyed);
     }
 
-    public void integrate(Entity entity){
+    private void integrate(Entity entity){
 
         if (entity instanceof Box && ((Box) entity).isDestroyed()){
             return;
@@ -76,7 +99,7 @@ public class PhysicEngine {
         entity.setVelocity(newVelocity);
     }
 
-    public void resolveCollision(Entity entityA, Entity entityB){
+    private void resolveCollision(Entity entityA, Entity entityB){
         if(entityA instanceof Coo && entityB instanceof Box){
             resolveCircleRect((Coo)entityA, (Box)entityB);
         }
@@ -94,7 +117,7 @@ public class PhysicEngine {
         }
     }
 
-    public Vector2D reflectVelocity(Vector2D vector, Vector2D normalVector){
+    private Vector2D reflectVelocity(Vector2D vector, Vector2D normalVector){
         Vector2D n = normalVector.normalize();
         return vector.sub(n.mul(2 * vector.dot(n)));
     }
@@ -263,6 +286,34 @@ public class PhysicEngine {
         if(overlap > 0){
             Vector2D push = normal.mul(overlap + 0.5);
             coo.setPosition(coo.getPosition().add(push));
+        }
+    }
+
+    public void checkGroundCollision(Entity entity){
+        double groundY = 700;
+        double x = entity.getPosition().getX();
+        double y = entity.getPosition().getY();
+        double height = 0;
+
+        if(entity instanceof Coo){
+            Coo coo = (Coo)entity;
+            height = coo.getRadius() * 2;
+        } else if(entity instanceof Knight){
+            Knight knight = (Knight)entity;
+            height = knight.getRadius() * 2;
+        } else if(entity instanceof Box){
+            Box box = (Box)entity;
+            height = box.getHeight();
+        }
+
+        double bottomY = y + height;
+
+        if(bottomY >= groundY){
+            double newY = groundY - height;
+            entity.setPosition(new Vector2D(x, newY));
+
+            Vector2D v = entity.getVelocity();
+            entity.setVelocity(new Vector2D(v.getX(), -v.getY() * 0.3));
         }
     }
 }

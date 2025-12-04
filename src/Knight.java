@@ -19,6 +19,8 @@ public class Knight implements Entity {
     private GraphicsGroup fullKnight;
     private Image image;
 
+    private boolean isStatic = true;
+
     private boolean isDestroyed = false;
 
     private double explosiveRadius = 0;
@@ -32,11 +34,11 @@ public class Knight implements Entity {
         this.hp = knightType.getHp();
 
         fullKnight = new GraphicsGroup(knightX, knightY);
-        knight = new Ellipse(knightX, knightY, radius * 3, radius * 3);
+        knight = new Ellipse(0, 0, radius * 2, radius * 2);
         image = new Image("images/KnightCropped.png");
-        image.setPosition(knightX, knightY);
-        image.setMaxHeight(radius * 3);
-        image.setMaxWidth(radius * 3);
+        image.setPosition(0,0);
+        image.setMaxHeight(radius * 2);
+        image.setMaxWidth(radius * 2);
         knight.setFillColor(new Color(232, 155, 229));
         fullKnight.add(knight);
         fullKnight.add(image);
@@ -60,7 +62,7 @@ public class Knight implements Entity {
         knightX = v.getX();
         knightY = v.getY();
 
-        knight.setPosition(knightX, knightY);
+        fullKnight.setPosition(knightX, knightY);
     }
 
     public Vector2D getVelocity(){
@@ -87,7 +89,7 @@ public class Knight implements Entity {
         knightX += velocity.getX() * dt;
         knightY += velocity.getY() * dt;
 
-        knight.setPosition(knightX, knightY);
+        fullKnight.setPosition(knightX, knightY);
     }
 
     public Rectangle getBounds(){
@@ -127,5 +129,13 @@ public class Knight implements Entity {
 
     public GraphicsGroup getShape(){
         return fullKnight;
+    }
+
+    public void setStatic(boolean s){
+        isStatic = s;
+    }
+
+    public boolean isStatic(){
+        return isStatic;
     }
 }

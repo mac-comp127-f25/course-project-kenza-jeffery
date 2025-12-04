@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.macalester.graphics.GraphicsGroup;
-import edu.macalester.graphics.Rectangle;
 
 public class Level {
     private List<Box> boxes = new ArrayList<>();
@@ -10,6 +9,8 @@ public class Level {
     private List<Knight> knights = new ArrayList<>();
     private List<Entity> entities = new ArrayList<>();
     private GraphicsGroup entityGroup = new GraphicsGroup();
+    private final double waitingCooY = 660;
+    private final double cooRadius = 20;
     DifLevel difLevel;
 
     public Level(DifLevel difLevel){
@@ -52,6 +53,7 @@ public class Level {
     }
 
     public List<Coo> getCoos(){
+        coos.sort((c1, c2) -> Double.compare(c1.getPosition().getX(), c2.getPosition().getX()));
         return coos;
     }
 
@@ -64,7 +66,11 @@ public class Level {
     }
 
     private void setupFirstLevel(){
-        Coo coo1 = new Coo(CooType.regularCoo, 45, 320, 20);
+        Coo coo1 = new Coo(CooType.regularCoo, 260, waitingCooY, cooRadius);
+        Coo coo2 = new Coo(CooType.regularCoo, 320, waitingCooY, cooRadius);
+        Coo coo3 = new Coo(CooType.regularCoo, 380, waitingCooY, cooRadius);
+        Coo coo4 = new Coo(CooType.regularCoo, 440, waitingCooY, cooRadius);
+
         Box box1 = new Box(MaterialType.WOOD, 1000, 680, 100, 20);
         Box box2 = new Box(MaterialType.STONE, 1000, 580, 20, 120);
         Box box3 = new Box(MaterialType.WOOD, 1000, 580, 100, 20);
@@ -79,7 +85,9 @@ public class Level {
         Box box10 = new Box(MaterialType.WOOD, 1000, 235, 120, 20);
         Box box11 = new Box(MaterialType.WOOD, 1050, 205, 20, 30);
 
-        Knight knight1 = new Knight(KnightType.basicKnight, 1030, 520, 30);
+        Knight knight1 = new Knight(KnightType.basicKnight, 1040, 640, 20);
+        Knight knight2 = new Knight(KnightType.basicKnight, 1040, 165, 20);
+        Knight knight3 = new Knight(KnightType.basicKnight, 1040, 440, 20);
         
         boxes.add(box1);
         boxes.add(box2);
@@ -96,8 +104,13 @@ public class Level {
         boxes.add(box11);
         
         knights.add(knight1);
+        knights.add(knight2);
+        knights.add(knight3);
 
         coos.add(coo1);
+        coos.add(coo2);
+        coos.add(coo3);
+        coos.add(coo4);
     }
 
     private void setupSecondLevel(){
@@ -117,6 +130,7 @@ public class Level {
     }
 
     public void addToEntityGroup(){
+        entityGroup.removeAll();
         for(Entity entity : entities){
             entityGroup.add(entity.getShape());
         }

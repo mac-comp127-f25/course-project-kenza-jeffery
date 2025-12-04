@@ -1,14 +1,14 @@
 import java.awt.Color;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Line;
+import edu.macalester.graphics.events.MouseButtonEvent;
+import edu.macalester.graphics.events.MouseMotionEvent;
 
-public class Handler extends MouseAdapter{
+public class Handler{
 
-    private int startX, startY;
+    private double startX, startY;
     private static final double maxPower = 60;
-    private int currentX, currentY;
+    private double currentX, currentY;
     private Vector2D vector = new Vector2D(0, 0);
 
     private Line line;
@@ -21,10 +21,9 @@ public class Handler extends MouseAdapter{
         this.canvas = canvas;
     }
     
-    @Override
-    public void mousePressed(MouseEvent e){
-        startX = e.getX();
-        startY = e.getY();
+    public void mousePressed(MouseButtonEvent e){
+        startX = e.getPosition().getX();
+        startY = e.getPosition().getY();
         currentX = startX;
         currentY = startY;
         isDragging = true;
@@ -34,21 +33,19 @@ public class Handler extends MouseAdapter{
         canvas.add(line);
     }
 
-    @Override
-    public void mouseDragged(MouseEvent e){
+    public void mouseDragged(MouseMotionEvent e){
         if(isDragging){
-            currentX = e.getX();
-            currentY = e.getY();
+            currentX = e.getPosition().getX();
+            currentY = e.getPosition().getY();
 
             line.setEndPosition(currentX, currentY);
         }
     }
 
-    @Override
-    public void mouseReleased(MouseEvent e){
+    public void mouseReleased(MouseButtonEvent e){
         if(isDragging){
-            int releaseX = e.getX();
-            int releaseY = e.getY();
+            double releaseX = e.getPosition().getX();
+            double releaseY = e.getPosition().getY();
 
             Vector2D draggedVector = new Vector2D(startX - releaseX, startY - releaseY);
 

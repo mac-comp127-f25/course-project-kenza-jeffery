@@ -7,7 +7,6 @@ import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Image;
 
-import java.awt.event.MouseEvent;
 import edu.macalester.graphics.ui.Button;
 
 
@@ -16,28 +15,23 @@ public class Game {
     private static Background background;
     private List<Level> levels = new ArrayList<>();
     private Slingshot slingshot;
-    private Coo coo;
-    private Handler handler;
     private Level level;
-    private PhysicEngine engine;
+
+    private Coo currentCoo;
+
+    private Handler handler;
+    private PhysicEngine engine = new PhysicEngine();
 
     public static final int CANVAS_WIDTH = 1280;
     public static final int CANVAS_HEIGHT = 720;
-
-    private boolean isWin = false;
-    private boolean isLoss = false;
-    private MouseEvent event;
-
-    private boolean isDragging = false;
 
     private GraphicsGroup backgroundItems = new GraphicsGroup();
 
 
     private GraphicsText text;
-    private double textX;
-    private double textY;
+    private double textX = 630;
+    private double textY = 350;
 
-    private Button nextGame = new Button("Next Game");
     private Button resetLevel = new Button("New Game");
     private Button Level1 = new Button("Level 1");
     private Button Level2 = new Button("Level 2");
@@ -45,8 +39,10 @@ public class Game {
     private Button Level4 = new Button("Level 4");
     private Button Level5 = new Button("Level 5");
 
-    private double levelButtonBeginX;
-    private double levelButtonBeginY;
+    private double levelButtonBeginX = 1200;
+    private double levelButtonBeginY = 50;
+
+    private int currentLevelIndex = 0;
 
     public static void main(String[] args) {
         new Game();
@@ -55,30 +51,79 @@ public class Game {
     public Game(){
         canvas = new CanvasWindow("Angry Coo!", CANVAS_WIDTH, CANVAS_HEIGHT);
         this.addBackground(canvas, "images/LongerBackground.png");
-        //handler = new Handler(canvas);
-        //this.createLevels();
-        level = new Level(DifLevel.first);
-        canvas.add(level.getEntityGroup());
-        canvas.draw();
-        //this.runGame();
+        handler = new Handler(canvas);
+        this.addButtons(canvas);
+
+        canvas.onMouseDown(e -> handler.mousePressed(e));
+            canvas.onMouseMove(e -> handler.mouseDragged(e));
+            canvas.onMouseUp(e -> {
+                handler.mouseReleased(e);
+                currentCoo.setVelocity(handler.getVector());
+            });
+
+    
+        resetLevel.onClick(() -> {
+            this.loadLevel(currentLevelIndex);
+        });
+
+        Level1.onClick(() -> {
+            this.loadLevel(0);
+        });
+
+        Level2.onClick(() -> {
+            this.loadLevel(1);
+        });
+
+        Level3.onClick(() -> {
+            this.loadLevel(2);
+        });
+
+        Level4.onClick(() -> {
+            this.loadLevel(3);
+        });
+
+        Level5.onClick(() -> {
+            this.loadLevel(4);
+        });
+
+        this.runGame();
     }
 
     public void runGame(){
+        this.createLevels();
+        level = levels.get(0);
+        canvas.add(level.getEntityGroup());
         canvas.animate(() -> {
-            
-            if(isLoss(level)){
-                text = new GraphicsText("You Lose!", textX, textY);
-                canvas.add(text);
+
+            if(level == null){
                 return;
             }
 
-            if(isWin(level)){
-                text = new GraphicsText("You Win!", textX, textY);
-                canvas.add(text);
+            engine.update();
+
+            if(level.getKnights().isEmpty()){
+                if(text == null){
+                    text = new GraphicsText("You Win!", textX, textY);
+                    canvas.add(text);
+                }
+                return;
+            } else if(level.getCoos().isEmpty()){
+                if(text == null){
+                    text = new GraphicsText("You Lose!", textX, textY);
+                    canvas.add(text);
+                }
                 return;
             }
             
-            this.addBackground(canvas, "images/LongerBackground.png");
+            if (currentCoo != null && handler.getCurrentX() >= 200) {
+                engine.removeCoo(currentCoo);
+                List<Coo> coos = level.getCoos();
+                if (!coos.isEmpty()) {
+                    currentCoo = coos.get(0);
+                } else{
+                    currentCoo = null;
+                }
+            }
         });
     }
 
@@ -113,17 +158,46 @@ public class Game {
         }
     }
 
-    public boolean isWin(Level level){
-        if(level.getKnights().isEmpty()){
-            isWin = true;
-        }
-        return isWin;
+    private void addButtons(CanvasWindow canvas){
+        resetLevel.setPosition(50, 50);
+        canvas.add(resetLevel);
+        Level1.setPosition(levelButtonBeginX, levelButtonBeginY);
+        Level2.setPosition(levelButtonBeginX, levelButtonBeginY + 50);
+        Level3.setPosition(levelButtonBeginX, levelButtonBeginY + 100);
+        Level4.setPosition(levelButtonBeginX, levelButtonBeginY + 150);
+        Level5.setPosition(levelButtonBeginX, levelButtonBeginY + 200);
+        canvas.add(Level1);
+        canvas.add(Level2);
+        canvas.add(Level3);
+        canvas.add(Level4);
+        canvas.add(Level5);
     }
 
-    private boolean isLoss(Level level){
-        if(level.getCoos().isEmpty()){
-            isLoss = true;
+    private void loadLevel(int index){
+        currentLevelIndex = index;
+
+        if(level != null){
+            canvas.remove(level.getEntityGroup());
         }
-        return isLoss;
+
+        level = levels.get(currentLevelIndex);
+
+        canvas.add(level.getEntityGroup());
+
+        engine.setBoxes(level.getBoxes());
+        engine.setCoos(level.getCoos());
+        engine.setKnights(level.getKnights());
+
+        List<Coo> coos = level.getCoos();
+        if (!coos.isEmpty()) {
+            currentCoo = coos.get(0);
+        } else {
+            currentCoo = null;
+        }
+
+        if (text != null) {
+            canvas.remove(text);
+            text = null;
+        }
     }
 }

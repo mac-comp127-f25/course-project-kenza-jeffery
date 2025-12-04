@@ -13,6 +13,8 @@ public class Box implements Entity {
     private double mass;
     private Rectangle box;
 
+    private boolean isStatic = true;
+
     private boolean isDestroyed = false;
 
     public Box(MaterialType materialType, double boxX, double boxY, double width, double height){
@@ -25,7 +27,6 @@ public class Box implements Entity {
         box = new Rectangle(boxX, boxY, width, height);
         if (materialType == MaterialType.WOOD) {
             box.setFillColor(new Color(121, 96, 37));
-        
         } else if (materialType == MaterialType.STONE) {
             box.setFillColor(new Color(129, 128, 125));
         } else {
@@ -107,5 +108,13 @@ public class Box implements Entity {
 
     public double getMass(){
         return mass;
+    }
+
+    public void setStatic(boolean s){
+        isStatic = s;
+    }
+
+    public boolean isStatic(){
+        return isStatic;
     }
 }

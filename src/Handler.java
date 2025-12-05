@@ -7,7 +7,7 @@ import edu.macalester.graphics.events.MouseMotionEvent;
 public class Handler{
 
     private double startX, startY;
-    private static final double maxPower = 60;
+    private static final double maxPower = 6000;
     private double currentX, currentY;
     private Vector2D vector = new Vector2D(0, 0);
 
@@ -53,7 +53,7 @@ public class Handler{
                 draggedVector = draggedVector.normalize().mul(maxPower);
             }
 
-            vector = draggedVector;
+            vector = draggedVector.mul(2.5);
             
             canvas.remove(line);
             line = null;

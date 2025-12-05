@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PhysicEngine {
-    private Vector2D gravity = new Vector2D(0, 200);
+    private Vector2D gravity = new Vector2D(0, 150);
     private List<Box> boxes = new ArrayList<>();
     private List<Coo> coos = new ArrayList<>();
     private List<Knight> knights = new ArrayList<>();
@@ -72,6 +72,10 @@ public class PhysicEngine {
     }
 
     private void integrate(Entity entity){
+
+        if (entity instanceof Coo && ((Coo) entity).isDragging()) {
+            return; 
+        }
 
         if (entity instanceof Box && ((Box) entity).isDestroyed()){
             return;
@@ -294,6 +298,7 @@ public class PhysicEngine {
         double x = entity.getPosition().getX();
         double y = entity.getPosition().getY();
         double height = 0;
+        double friction = 0.9;
 
         if(entity instanceof Coo){
             Coo coo = (Coo)entity;
@@ -313,7 +318,7 @@ public class PhysicEngine {
             entity.setPosition(new Vector2D(x, newY));
 
             Vector2D v = entity.getVelocity();
-            entity.setVelocity(new Vector2D(v.getX(), -v.getY() * 0.3));
+            entity.setVelocity(new Vector2D(v.getX() * friction, -v.getY() * 0.3));
         }
     }
 }

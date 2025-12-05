@@ -13,7 +13,6 @@ import edu.macalester.graphics.ui.Button;
 public class Game {
     private static CanvasWindow canvas;
     private static Background background;
-    private List<Level> levels = new ArrayList<>();
     private Slingshot slingshot;
     private Level level;
 
@@ -27,6 +26,7 @@ public class Game {
 
     private GraphicsGroup backgroundItems = new GraphicsGroup();
 
+    private long lastMovingTime = System.currentTimeMillis();
 
     private GraphicsText text;
     private double textX = 630;
@@ -43,6 +43,16 @@ public class Game {
     private double levelButtonBeginY = 50;
 
     private int currentLevelIndex = 0;
+    private double startCooX = 185;
+    private double startCooY = 470;
+
+    private List<DifLevel> levelConfigs = List.of(
+        DifLevel.first,
+        DifLevel.second,
+        DifLevel.third,
+        DifLevel.forth,
+        DifLevel.fifth
+    );
 
     public static void main(String[] args) {
         new Game();
@@ -54,12 +64,34 @@ public class Game {
         handler = new Handler(canvas);
         this.addButtons(canvas);
 
-        canvas.onMouseDown(e -> handler.mousePressed(e));
-            canvas.onMouseMove(e -> handler.mouseDragged(e));
-            canvas.onMouseUp(e -> {
-                handler.mouseReleased(e);
+        canvas.onMouseDown(e -> {handler.mousePressed(e);
+                if (currentCoo != null && e.getPosition().getX() < 200 && !currentCoo.isLaunch()) {
+                        currentCoo.setDragging(true);
+                    }
+                });
+
+        canvas.onDrag(e -> {
+            handler.mouseDragged(e);
+
+            if (currentCoo != null && currentCoo.isDragging() && !currentCoo.isLaunch()) {
+                double mouseX = e.getPosition().getX();
+                double mouseY = e.getPosition().getY();
+
+                currentCoo.setPosition(new Vector2D(mouseX - currentCoo.getRadius(), mouseY - currentCoo.getRadius()));
+                currentCoo.setVelocity(new Vector2D(0, 0));
+            }
+        });
+
+        canvas.onMouseUp(e -> {
+            handler.mouseReleased(e);
+
+            if (currentCoo != null && currentCoo.isDragging() && !currentCoo.isLaunch()) {
+                currentCoo.setDragging(false);
+                currentCoo.setLaunch(true);
                 currentCoo.setVelocity(handler.getVector());
-            });
+                engine.addCoo(currentCoo);
+            }
+        });
 
     
         resetLevel.onClick(() -> {
@@ -90,9 +122,6 @@ public class Game {
     }
 
     public void runGame(){
-        this.createLevels();
-        level = levels.get(0);
-        canvas.add(level.getEntityGroup());
         canvas.animate(() -> {
 
             if(level == null){
@@ -100,6 +129,7 @@ public class Game {
             }
 
             engine.update();
+            this.checkCooStop();
 
             if(level.getKnights().isEmpty()){
                 if(text == null){
@@ -113,16 +143,6 @@ public class Game {
                     canvas.add(text);
                 }
                 return;
-            }
-            
-            if (currentCoo != null && handler.getCurrentX() >= 200) {
-                engine.removeCoo(currentCoo);
-                List<Coo> coos = level.getCoos();
-                if (!coos.isEmpty()) {
-                    currentCoo = coos.get(0);
-                } else{
-                    currentCoo = null;
-                }
             }
         });
     }
@@ -142,14 +162,6 @@ public class Game {
         backgroundItems.add(slingshot.getShape());
         canvas.add(backgroundItems);
         canvas.draw();
-    }
-
-    public void createLevels(){
-        levels.add(new Level(DifLevel.first));
-        levels.add(new Level(DifLevel.second));
-        levels.add(new Level(DifLevel.third));
-        levels.add(new Level(DifLevel.forth));
-        levels.add(new Level(DifLevel.fifth));
     }
 
     public void drawLevel(Level level, CanvasWindow canvas){
@@ -176,21 +188,25 @@ public class Game {
     private void loadLevel(int index){
         currentLevelIndex = index;
 
-        if(level != null){
+        if (level != null) {
             canvas.remove(level.getEntityGroup());
         }
 
-        level = levels.get(currentLevelIndex);
+        level = new Level(levelConfigs.get(index));
 
         canvas.add(level.getEntityGroup());
 
         engine.setBoxes(level.getBoxes());
-        engine.setCoos(level.getCoos());
         engine.setKnights(level.getKnights());
+        engine.setCoos(new ArrayList<>());
 
         List<Coo> coos = level.getCoos();
         if (!coos.isEmpty()) {
             currentCoo = coos.get(0);
+            currentCoo.setPosition(new Vector2D(startCooX, startCooY));
+            currentCoo.setDragging(false);
+            currentCoo.setLaunch(false);
+            currentCoo.setVelocity(new Vector2D(0,0));
         } else {
             currentCoo = null;
         }
@@ -199,5 +215,47 @@ public class Game {
             canvas.remove(text);
             text = null;
         }
+
+        lastMovingTime = System.currentTimeMillis();
+    }
+
+
+    private void checkCooStop(){
+        if(currentCoo == null){
+            return;
+        }
+        if(!currentCoo.isLaunch()){
+            return;
+        }
+
+        Vector2D v = currentCoo.getVelocity();
+
+        if(Math.abs(v.getX()) < 2 && Math.abs(v.getY()) < 2){
+            long now = System.currentTimeMillis();
+            if (now - lastMovingTime > 1000) {  
+                switchToNextCoo();
+            }
+        }else {
+            lastMovingTime = System.currentTimeMillis();
+        }
+    }
+
+    private void switchToNextCoo() {
+        if (currentCoo != null) {
+            engine.removeCoo(currentCoo);
+            level.getCoos().remove(currentCoo);
+        }
+
+        if (!level.getCoos().isEmpty()) {
+            currentCoo = level.getCoos().get(0);
+            currentCoo.setPosition(new Vector2D(startCooX, startCooY));
+            currentCoo.setDragging(false);
+            currentCoo.setLaunch(false);
+            currentCoo.setVelocity(new Vector2D(0, 0));
+        } else {
+            currentCoo = null;
+        }
+
+        lastMovingTime = System.currentTimeMillis();
     }
 }

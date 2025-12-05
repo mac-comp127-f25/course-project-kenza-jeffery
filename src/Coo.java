@@ -19,6 +19,9 @@ public class Coo implements Entity {
     private Image image;
     private boolean isDestroyed = false;
 
+    private boolean isDragging = false;
+    private boolean isLaunch = false;
+
     private double explosiveRadius = 0;
     private int splitCount = 0;
     
@@ -121,5 +124,21 @@ public class Coo implements Entity {
     public void moveTo(double x, double y){
         cooX = x; 
         cooY = y;
+    }
+
+    public boolean isDragging(){
+        return isDragging;
+    }
+
+    public void setDragging(boolean s){
+        isDragging = s;
+    }
+
+    public boolean isLaunch(){
+        return isLaunch;
+    }
+
+    public void setLaunch(boolean s){
+        isLaunch = s;
     }
 }

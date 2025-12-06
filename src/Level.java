@@ -9,7 +9,7 @@ public class Level {
     private List<Knight> knights = new ArrayList<>();
     private List<Entity> entities = new ArrayList<>();
     private GraphicsGroup entityGroup = new GraphicsGroup();
-    private final double waitingCooY = 660;
+    private final double waitingCooY = 680;
     private final double cooRadius = 20;
     DifLevel difLevel;
 
@@ -66,10 +66,10 @@ public class Level {
     }
 
     private void setupFirstLevel(){
-        Coo coo1 = new Coo(CooType.regularCoo, 260, waitingCooY, cooRadius);
-        Coo coo2 = new Coo(CooType.regularCoo, 320, waitingCooY, cooRadius);
-        Coo coo3 = new Coo(CooType.regularCoo, 380, waitingCooY, cooRadius);
-        Coo coo4 = new Coo(CooType.regularCoo, 440, waitingCooY, cooRadius);
+        Coo coo1 = new Coo(CooType.regularCoo, 280, waitingCooY, cooRadius);
+        Coo coo2 = new Coo(CooType.regularCoo, 340, waitingCooY, cooRadius);
+        Coo coo3 = new Coo(CooType.regularCoo, 400, waitingCooY, cooRadius);
+        Coo coo4 = new Coo(CooType.regularCoo, 460, waitingCooY, cooRadius);
 
         Box box1 = new Box(MaterialType.WOOD, 1000, 680, 100, 20);
         Box box2 = new Box(MaterialType.STONE, 1000, 580, 20, 120);
@@ -85,9 +85,9 @@ public class Level {
         Box box10 = new Box(MaterialType.WOOD, 1000, 235, 120, 20);
         Box box11 = new Box(MaterialType.WOOD, 1050, 205, 20, 30);
 
-        Knight knight1 = new Knight(KnightType.basicKnight, 1040, 640, 20);
-        Knight knight2 = new Knight(KnightType.basicKnight, 1040, 165, 20);
-        Knight knight3 = new Knight(KnightType.basicKnight, 1040, 440, 20);
+        Knight knight1 = new Knight(KnightType.basicKnight, 1060, 660, 20);
+        Knight knight2 = new Knight(KnightType.basicKnight, 1060, 185, 20);
+        Knight knight3 = new Knight(KnightType.basicKnight, 1060, 460, 20);
         
         boxes.add(box1);
         boxes.add(box2);
@@ -138,5 +138,9 @@ public class Level {
 
     public GraphicsGroup getEntityGroup(){
         return entityGroup;
+    }
+
+    public void removeEntity(Entity e){
+        Game.canvas.remove(e.getShape());
     }
 }

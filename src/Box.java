@@ -3,18 +3,18 @@ import edu.macalester.graphics.Rectangle;
 
 public class Box implements Entity {
 
-    private double hp;
-    private double angle = 0;
-    private Vector2D velocity;
     private double width;
     private double height;
     private double boxX;
     private double boxY;
     private double mass;
+    private double hp;
+    private double angle = 0;
+
     private Rectangle box;
+    private Vector2D velocity;
 
     private boolean isStatic = true;
-
     private boolean isDestroyed = false;
 
     public Box(MaterialType materialType, double boxX, double boxY, double width, double height){
@@ -23,8 +23,10 @@ public class Box implements Entity {
         this.boxX = boxX;
         this.boxY = boxY;
         this.mass = materialType.getMass();
-        hp = materialType.getHp();
+        this.hp = materialType.getHp();
+        
         box = new Rectangle(boxX, boxY, width, height);
+
         if (materialType == MaterialType.WOOD) {
             box.setFillColor(new Color(121, 96, 37));
         } else if (materialType == MaterialType.STONE) {
@@ -32,12 +34,8 @@ public class Box implements Entity {
         } else {
             box.setFillColor(new Color(161, 237, 255));
         }
-
-        this.velocity = new Vector2D(0, 0);
-    }
-
-    public Rectangle getShape(){
-        return box;
+        
+        velocity = new Vector2D(0, 0);
     }
 
     public double getX(){
@@ -56,31 +54,52 @@ public class Box implements Entity {
         return height;
     }
 
-    public void update(double dt){
-        if(isDestroyed){
-            return;
-        }
-        
-        boxX += velocity.getX() * dt;
-        boxY += velocity.getY() * dt;
-        box.setPosition(boxX, boxY);
-    }
-
     public double getAngle(){
         return angle;
+    }
+
+    public double getHp(){
+        return hp;
+    }
+
+    public double getRadius(){
+        return Math.max(width, height) / 2;
+    }
+
+    public double getMass(){
+        return mass;
+    }
+
+    public Rectangle getShape(){
+        return box;
     }
 
     public Rectangle getBounds(){
         return box;
     }
 
+    public Vector2D getVelocity(){
+        return velocity;
+    }
+
     public Vector2D getPosition(){
-        return new Vector2D(boxX, boxY);
+        return new Vector2D(
+            boxX + width / 2,
+            boxY + height / 2
+        );
+    }
+
+    public boolean isDestroyed(){
+        return isDestroyed;
+    }
+
+    public boolean isStatic(){
+        return isStatic;
     }
 
     public void setPosition(Vector2D v){
-        boxX = v.getX();
-        boxY = v.getY();
+        boxX = v.getX() - width / 2;
+        boxY = v.getY() - height / 2;
         
         if(!isDestroyed){
             box.setPosition(boxX, boxY);
@@ -91,30 +110,24 @@ public class Box implements Entity {
         this.velocity = v;
     }
 
-    public void takeDamage(double force){
-        hp -= force;
-        if(hp <= 0){
-            isDestroyed = true;
-        }
-    }
-    
-    public Vector2D getVelocity(){
-        return velocity;
-    }
-
-    public boolean isDestroyed(){
-        return isDestroyed;
-    }
-
-    public double getMass(){
-        return mass;
-    }
-
     public void setStatic(boolean s){
         isStatic = s;
     }
 
-    public boolean isStatic(){
-        return isStatic;
+    public void update(double dt){
+        if(isDestroyed || isStatic){
+            return;
+        }
+        
+        boxX += velocity.getX() * dt;
+        boxY += velocity.getY() * dt;
+        box.setPosition(boxX, boxY);
+    }
+
+    public void takeDamage(double dmg){
+        hp -= dmg;
+        if(hp <= 0){
+            isDestroyed = true;
+        }
     }
 }

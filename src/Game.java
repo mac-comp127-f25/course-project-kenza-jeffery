@@ -9,9 +9,8 @@ import edu.macalester.graphics.Image;
 
 import edu.macalester.graphics.ui.Button;
 
-
 public class Game {
-    private static CanvasWindow canvas;
+    public static CanvasWindow canvas;
     private static Background background;
     private Slingshot slingshot;
     private Level level;
@@ -43,8 +42,8 @@ public class Game {
     private double levelButtonBeginY = 50;
 
     private int currentLevelIndex = 0;
-    private double startCooX = 185;
-    private double startCooY = 470;
+    private double startCooX = 205;
+    private double startCooY = 490;
 
     private List<DifLevel> levelConfigs = List.of(
         DifLevel.first,
@@ -77,7 +76,7 @@ public class Game {
                 double mouseX = e.getPosition().getX();
                 double mouseY = e.getPosition().getY();
 
-                currentCoo.setPosition(new Vector2D(mouseX - currentCoo.getRadius(), mouseY - currentCoo.getRadius()));
+                currentCoo.setPosition(new Vector2D(mouseX, mouseY));
                 currentCoo.setVelocity(new Vector2D(0, 0));
             }
         });
@@ -92,7 +91,6 @@ public class Game {
                 engine.addCoo(currentCoo);
             }
         });
-
     
         resetLevel.onClick(() -> {
             this.loadLevel(currentLevelIndex);

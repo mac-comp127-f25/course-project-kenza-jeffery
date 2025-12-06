@@ -6,19 +6,42 @@ import edu.macalester.graphics.events.MouseMotionEvent;
 
 public class Handler{
 
-    private double startX, startY;
     private static final double maxPower = 6000;
-    private double currentX, currentY;
+
+    private double startX;
+    private double startY;
+    private double currentX;
+    private double currentY;
+    
     private Vector2D vector = new Vector2D(0, 0);
 
-    private Line line;
-
     private CanvasWindow canvas;
+    private Line line;
 
     private boolean isDragging = false;
 
     public Handler(CanvasWindow canvas){
         this.canvas = canvas;
+    }
+
+    public Vector2D getVector(){
+        return vector;
+    }
+
+    public double getStartX(){
+        return startX;
+    }
+
+    public double getStartY(){
+        return startY;
+    }
+
+    public double getCurrentX(){
+        return currentX;
+    }
+
+    public double getCurrentY(){
+        return currentY;
     }
     
     public void mousePressed(MouseButtonEvent e){
@@ -60,25 +83,5 @@ public class Handler{
 
             isDragging = false;
         }
-    }
-
-    public Vector2D getVector(){
-        return vector;
-    }
-
-    public double getStartX(){
-        return startX;
-    }
-
-    public double getStartY(){
-        return startY;
-    }
-
-    public double getCurrentX(){
-        return currentX;
-    }
-
-    public double getCurrentY(){
-        return currentY;
     }
 }

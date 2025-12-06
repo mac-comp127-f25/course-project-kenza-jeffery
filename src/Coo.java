@@ -1,5 +1,6 @@
 import java.awt.Color;
 
+import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
 import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.Image;
@@ -10,20 +11,20 @@ public class Coo implements Entity {
     private CooType cooType;
     private double cooX;
     private double cooY;
-    private double angle = 0;
     private double radius;
-    private Vector2D velocity;
-    private Ellipse coo;
     private double mass;
-    private GraphicsGroup fullCoo;
-    private Image image;
-    private boolean isDestroyed = false;
-
-    private boolean isDragging = false;
-    private boolean isLaunch = false;
-
     private double explosiveRadius = 0;
     private int splitCount = 0;
+    private double angle = 0;
+
+    private Ellipse coo;
+    private GraphicsGroup fullCoo;
+    private Image image;
+    private Vector2D velocity;
+
+    private boolean isDestroyed = false;
+    private boolean isDragging = false;
+    private boolean isLaunch = false;
     
     public Coo(CooType cooType, double cooX, double cooY, double radius){
         this.cooType = cooType;
@@ -33,15 +34,17 @@ public class Coo implements Entity {
         this.velocity = new Vector2D(0, 0);
         this.mass = cooType.getMass();
 
-        fullCoo = new GraphicsGroup(cooX, cooY);
+        fullCoo = new GraphicsGroup(cooX - radius, cooY - radius);
+
         coo = new Ellipse(0, 0, radius * 2, radius * 2);
+        coo.setFillColor(Color.BLUE);
+        fullCoo.add(coo);
+
         image = new Image("images/HighlandCowCropped.png");
         image.setPosition(0, 0);
         image.setMaxHeight(radius * 2);
         image.setMaxWidth(radius * 2);
-        fullCoo.add(coo);
         fullCoo.add(image);
-        coo.setFillColor(Color.BLUE);
 
         switch(cooType){
             case explosiveCoo:
@@ -75,26 +78,8 @@ public class Coo implements Entity {
         return radius * 2;
     }
 
-    public void setVelocity(Vector2D v){
-        velocity = v.mul(cooType.getSpeed() / 50);
-    }
-
-    public void setPosition(Vector2D v){
-        cooX = v.getX();
-        cooY = v.getY();
-
-        fullCoo.setPosition(cooX, cooY);
-    }
-
-    public void update(double dt){
-        cooX += velocity.getX() * dt;
-        cooY += velocity.getY() * dt;
-
-        fullCoo.setPosition(cooX, cooY);
-    }
-
     public Rectangle getBounds(){
-        return new Rectangle(cooX, cooY, radius * 2, radius * 2);
+        return new Rectangle(cooX - radius, cooY - radius, radius * 2, radius * 2);
     }
 
     public CooType getCooType(){
@@ -113,6 +98,10 @@ public class Coo implements Entity {
         return radius;
     }
 
+    public double getHp(){
+        return 0;
+    }
+
     public double getMass(){
         return mass;
     }
@@ -121,24 +110,64 @@ public class Coo implements Entity {
         return isDestroyed;
     }
 
-    public void moveTo(double x, double y){
-        cooX = x; 
-        cooY = y;
-    }
-
     public boolean isDragging(){
         return isDragging;
-    }
-
-    public void setDragging(boolean s){
-        isDragging = s;
     }
 
     public boolean isLaunch(){
         return isLaunch;
     }
 
+    public void setVelocity(Vector2D v){
+        velocity = v.mul(cooType.getSpeed() / 50);
+    }
+
+    public void setPosition(Vector2D v){
+        cooX = v.getX();
+        cooY = v.getY();
+
+        fullCoo.setPosition(cooX - radius, cooY - radius);
+    }
+
+    public void setDragging(boolean s){
+        isDragging = s;
+    }
+
     public void setLaunch(boolean s){
         isLaunch = s;
+    }
+
+    public void update(double dt){
+        cooX += velocity.getX() * dt;
+        cooY += velocity.getY() * dt;
+
+        fullCoo.setPosition(cooX - radius, cooY - radius);
+    }
+
+    public void moveTo(double x, double y){
+        cooX = x; 
+        cooY = y;
+
+        fullCoo.setPosition(cooX - radius, cooY - radius);
+    }
+
+    public void takeDamage(double dmg){
+        if(isDestroyed){
+            return;
+        }
+        isDestroyed = true;
+
+        this.destroy(Game.canvas);
+    }
+
+    public void destroy(CanvasWindow canvas){
+        try{
+            canvas.remove(fullCoo);
+        } catch(Exception ignored){}
+    }
+
+    public void applyImpulse(Vector2D impulse){
+        Vector2D dv = impulse.mul(1 / Math.max(1e-6, mass));
+        this.velocity = this.velocity.add(dv);
     }
 }

@@ -29,8 +29,8 @@ public class Knight implements Entity {
     private boolean isFlashing = false;
     private long flashEndTime = 0;
     private final Color originalColor = new Color(232, 155, 229);
-    private final Color hitColor = Color.RED;
-    private static final long FLASH_DURATION_MS = 120;
+    //private final Color hitColor = Color.RED;
+    //private static final long FLASH_DURATION_MS = 120;
 
     public Knight(KnightType knightType, double knightX, double knightY, double radius){
         this.knightType = knightType;
@@ -43,7 +43,7 @@ public class Knight implements Entity {
         fullKnight = new GraphicsGroup(knightX - radius, knightY - radius);
 
         knight = new Ellipse(0, 0, radius * 2, radius * 2);
-        knight.setFillColor(new Color(232, 155, 229));
+        knight.setFillColor(new Color(0, 0, 0));
         fullKnight.add(knight);
 
         image = new Image("images/KnightCropped.png");
@@ -149,27 +149,25 @@ public class Knight implements Entity {
         }
     }
 
-    public void takeDamage(double force){
-        long now = System.currentTimeMillis();
-        if (now - lastHitTime < HIT_COOLDOWN_MS) {
-            return;
-        }
-        lastHitTime = now;
+    // 在你的Knight.java的takeDamage方法中添加这些日志:
 
-        hp -= force;
-        if(hp <= 0){
-            isDestroyed = true;
-            this.onDestroy(Game.canvas); 
-        } else {
-            flashRed();
-        }
+public void takeDamage(double force){
+    long now = System.currentTimeMillis();
+    if (now - lastHitTime < HIT_COOLDOWN_MS) {
+        return;
     }
+    lastHitTime = now;
 
-    public void flashRed(){
-        knight.setFillColor(hitColor);
-        isFlashing = true;
-        flashEndTime = System.currentTimeMillis() + FLASH_DURATION_MS;
+    hp -= force;
+    if(hp <= 0){
+        isDestroyed = true;
+        
+        knight.setFillColor(new Color(0, 0, 0, 0));
+        knight.setStrokeColor(new Color(0, 0, 0, 0));
+        image.setMaxWidth(0);
+        image.setMaxHeight(0);
     }
+}
 
     public void onDestroy(CanvasWindow canvas) {
         canvas.remove(fullKnight);

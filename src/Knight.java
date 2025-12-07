@@ -1,5 +1,5 @@
 import java.awt.Color;
-import edu.macalester.graphics.CanvasWindow;
+
 import edu.macalester.graphics.Ellipse;
 import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.Image;
@@ -29,8 +29,6 @@ public class Knight implements Entity {
     private boolean isFlashing = false;
     private long flashEndTime = 0;
     private final Color originalColor = new Color(232, 155, 229);
-    //private final Color hitColor = Color.RED;
-    //private static final long FLASH_DURATION_MS = 120;
 
     public Knight(KnightType knightType, double knightX, double knightY, double radius){
         this.knightType = knightType;
@@ -149,28 +147,22 @@ public class Knight implements Entity {
         }
     }
 
-    // 在你的Knight.java的takeDamage方法中添加这些日志:
+    public void takeDamage(double force){
+        long now = System.currentTimeMillis();
+        if (now - lastHitTime < HIT_COOLDOWN_MS) {
+            return;
+        }
+        lastHitTime = now;
 
-public void takeDamage(double force){
-    long now = System.currentTimeMillis();
-    if (now - lastHitTime < HIT_COOLDOWN_MS) {
-        return;
-    }
-    lastHitTime = now;
-
-    hp -= force;
-    if(hp <= 0){
-        isDestroyed = true;
-        
-        knight.setFillColor(new Color(0, 0, 0, 0));
-        knight.setStrokeColor(new Color(0, 0, 0, 0));
-        image.setMaxWidth(0);
-        image.setMaxHeight(0);
-    }
-}
-
-    public void onDestroy(CanvasWindow canvas) {
-        canvas.remove(fullKnight);
+        hp -= force;
+        if(hp <= 0){
+            isDestroyed = true;
+            
+            knight.setFillColor(new Color(0, 0, 0, 0));
+            knight.setStrokeColor(new Color(0, 0, 0, 0));
+            image.setMaxWidth(0);
+            image.setMaxHeight(0);
+        }
     }
 
     public void applyImpulse(Vector2D impulse){

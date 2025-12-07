@@ -19,4 +19,5 @@ public interface Entity {
     void update(double dt);
     
     void takeDamage(double dmg);
+    void applyImpulse(Vector2D impulse);
 }

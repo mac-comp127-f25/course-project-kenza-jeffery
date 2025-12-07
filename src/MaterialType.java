@@ -1,7 +1,7 @@
 public enum MaterialType{
-    WOOD(50, 3), 
-    STONE(120, 6), 
-    ICE(30, 1);
+    WOOD(25, 3), 
+    STONE(50, 6), 
+    ICE(15, 1);
 
     private int hp;
     private double mass;

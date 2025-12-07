@@ -1,6 +1,5 @@
 import java.awt.Color;
 
-import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
 import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.Image;
@@ -13,6 +12,7 @@ public class Coo implements Entity {
     private double cooY;
     private double radius;
     private double mass;
+    private double hp; 
     private double explosiveRadius = 0;
     private int splitCount = 0;
     private double angle = 0;
@@ -26,6 +26,9 @@ public class Coo implements Entity {
     private boolean isDragging = false;
     private boolean isLaunch = false;
     
+    private long lastHitTime = 0;
+    private static final long HIT_COOLDOWN_MS = 150;
+    
     public Coo(CooType cooType, double cooX, double cooY, double radius){
         this.cooType = cooType;
         this.cooX = cooX;
@@ -33,6 +36,7 @@ public class Coo implements Entity {
         this.radius = radius;
         this.velocity = new Vector2D(0, 0);
         this.mass = cooType.getMass();
+        this.hp = 100.0; 
 
         fullCoo = new GraphicsGroup(cooX - radius, cooY - radius);
 
@@ -99,7 +103,7 @@ public class Coo implements Entity {
     }
 
     public double getHp(){
-        return 0;
+        return hp;
     }
 
     public double getMass(){
@@ -138,6 +142,8 @@ public class Coo implements Entity {
     }
 
     public void update(double dt){
+        if (isDestroyed) return;
+        
         cooX += velocity.getX() * dt;
         cooY += velocity.getY() * dt;
 
@@ -152,22 +158,29 @@ public class Coo implements Entity {
     }
 
     public void takeDamage(double dmg){
-        if(isDestroyed){
+        long now = System.currentTimeMillis();
+        if (now - lastHitTime < HIT_COOLDOWN_MS) {
             return;
         }
-        isDestroyed = true;
-
-        this.destroy(Game.canvas);
-    }
-
-    public void destroy(CanvasWindow canvas){
-        try{
-            canvas.remove(fullCoo);
-        } catch(Exception ignored){}
+        lastHitTime = now;
+        
+        hp -= dmg;
+        
+        if(hp <= 0){
+            isDestroyed = true;
+            this.removeCoo();
+        }
     }
 
     public void applyImpulse(Vector2D impulse){
         Vector2D dv = impulse.mul(1 / Math.max(1e-6, mass));
         this.velocity = this.velocity.add(dv);
+    }
+
+    public void removeCoo(){
+        coo.setFillColor(new Color(0, 0, 0, 0));
+        coo.setStrokeColor(new Color(0, 0, 0, 0));
+        image.setMaxWidth(0);
+        image.setMaxHeight(0);
     }
 }

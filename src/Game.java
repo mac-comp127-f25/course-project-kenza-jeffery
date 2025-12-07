@@ -240,6 +240,8 @@ public class Game {
 
     private void switchToNextCoo() {
         if (currentCoo != null) {
+            currentCoo.removeCoo();
+            canvas.pause(100);
             engine.removeCoo(currentCoo);
             level.getCoos().remove(currentCoo);
         }
@@ -250,6 +252,12 @@ public class Game {
             currentCoo.setDragging(false);
             currentCoo.setLaunch(false);
             currentCoo.setVelocity(new Vector2D(0, 0));
+            for(int j = 1; j < level.getCoos().size(); j ++){
+                double x = level.getCoos().get(j).getPosition().getX();
+                double y = level.getCoos().get(j).getPosition().getY();
+                level.getCoos().get(j).setPosition(new Vector2D(x - 60, y));
+            }
+
         } else {
             currentCoo = null;
         }

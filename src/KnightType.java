@@ -1,7 +1,7 @@
 public enum KnightType {
-    basicKnight(50, 0, 3),
-    explosiveKnight(50, 20, 5),
-    heavyKnight(100, 0, 8);
+    basicKnight(30, 0, 3),
+    explosiveKnight(30, 20, 5),
+    heavyKnight(60, 0, 8);
 
     private double hp;
     private double specialValue;

@@ -71,13 +71,13 @@ public class Level {
         Coo coo3 = new Coo(CooType.regularCoo, 400, waitingCooY, cooRadius);
         Coo coo4 = new Coo(CooType.regularCoo, 460, waitingCooY, cooRadius);
 
-        Box box1 = new Box(MaterialType.WOOD, 1000, 680, 100, 20);
-        Box box2 = new Box(MaterialType.STONE, 1000, 580, 20, 120);
-        Box box3 = new Box(MaterialType.WOOD, 1000, 580, 100, 20);
-        Box box4 = new Box(MaterialType.STONE, 1100, 580, 20, 120);
+        Box box1 = new Box(MaterialType.WOOD, 1000, 680, 120, 20);
+        Box box2 = new Box(MaterialType.STONE, 1000, 580, 20, 100);
+        Box box3 = new Box(MaterialType.WOOD, 1000, 560, 120, 20);
+        Box box4 = new Box(MaterialType.STONE, 1100, 580, 20, 100);
 
-        Box box5 = new Box(MaterialType.WOOD, 950, 480, 20, 220);
-        Box box6 = new Box(MaterialType.WOOD, 1150, 480, 20, 220);
+        Box box5 = new Box(MaterialType.WOOD, 950, 480, 20, 205);
+        Box box6 = new Box(MaterialType.WOOD, 1150, 480, 20, 205);
         Box box7 = new Box(MaterialType.WOOD, 950, 480, 220, 20);
 
         Box box8 = new Box(MaterialType.WOOD, 1000, 250, 20, 230);
@@ -87,12 +87,12 @@ public class Level {
 
         Knight knight1 = new Knight(KnightType.basicKnight, 1060, 660, 20);
         Knight knight2 = new Knight(KnightType.basicKnight, 1060, 185, 20);
-        Knight knight3 = new Knight(KnightType.basicKnight, 1060, 460, 20);
+        // Knight knight3 = new Knight(KnightType.basicKnight, 1060, 460, 20);
         
-        boxes.add(box1);
-        boxes.add(box2);
         boxes.add(box3);
+        boxes.add(box1);
         boxes.add(box4);
+        boxes.add(box2);
        
         boxes.add(box5);
         boxes.add(box6);
@@ -105,7 +105,7 @@ public class Level {
         
         knights.add(knight1);
         knights.add(knight2);
-        knights.add(knight3);
+        // knights.add(knight3);
 
         coos.add(coo1);
         coos.add(coo2);
@@ -114,7 +114,59 @@ public class Level {
     }
 
     private void setupSecondLevel(){
+        Coo coo1 = new Coo(CooType.regularCoo, 280, waitingCooY, cooRadius);
+        Coo coo2 = new Coo(CooType.regularCoo, 340, waitingCooY, cooRadius);
+        Coo coo3 = new Coo(CooType.regularCoo, 400, waitingCooY, cooRadius);
+        Coo coo4 = new Coo(CooType.regularCoo, 460, waitingCooY, cooRadius);
+
+        Knight knight1 = new Knight(KnightType.basicKnight, 1075, 660, 20);
+
+        Box box1 = new Box(MaterialType.WOOD, 970, 680, 50, 20);
+        Box box2 = new Box(MaterialType.WOOD, 980, 640, 50, 20);
+        Box box3 = new Box(MaterialType.WOOD, 990, 600, 50, 20);
+        Box box4 = new Box(MaterialType.WOOD, 1000, 560, 50, 20);
+
+        Box box5 = new Box(MaterialType.WOOD, 1140, 680, 50, 20);
+        Box box6 = new Box(MaterialType.WOOD, 1130, 640, 50, 20);
+        Box box7 = new Box(MaterialType.WOOD, 1120, 600, 50, 20);
+        Box box8 = new Box(MaterialType.WOOD, 1110, 560, 50, 20);
         
+        Box box9 = new Box(MaterialType.STONE, 1040, 540, 80, 20);
+
+        Box box10 = new Box(MaterialType.ICE, 1050, 520, 20, 50);
+        Box box11 = new Box(MaterialType.ICE, 1090, 520, 20, 50);
+
+        Box box12 = new Box(MaterialType.WOOD, 1060, 500, 50, 20);
+        
+       
+        
+
+        // Box box5 = new Box(MaterialType.WOOD, 1015, 400, 100, 20);
+        
+
+        boxes.add(box1);
+        boxes.add(box2);
+        boxes.add(box3);
+        boxes.add(box4);
+
+        boxes.add(box5);
+        boxes.add(box6);
+        boxes.add(box7);
+        boxes.add(box8);
+        
+        boxes.add(box9);
+        boxes.add(box10);
+        boxes.add(box11);
+        boxes.add(box12);
+       
+        // boxes.add(box5);
+
+        coos.add(coo1);
+        coos.add(coo2);
+        coos.add(coo3);
+        coos.add(coo4);
+
+        knights.add(knight1);
     }
 
     private void setupThirdLevel(){

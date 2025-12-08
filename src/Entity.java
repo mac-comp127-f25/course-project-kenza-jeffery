@@ -7,6 +7,7 @@ public interface Entity {
     double getMass();
     double getRadius();
     double getHp();
+    double getScore();
 
     Vector2D getPosition();
     Vector2D getVelocity();

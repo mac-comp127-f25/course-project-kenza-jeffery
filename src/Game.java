@@ -15,6 +15,9 @@ public class Game {
     private Slingshot slingshot;
     private Level level;
 
+    private GraphicsText scoreText;
+    private int score = 0;
+
     private Coo currentCoo;
 
     private Handler handler;
@@ -62,6 +65,9 @@ public class Game {
         this.addBackground(canvas, "images/LongerBackground.png");
         handler = new Handler(canvas);
         this.addButtons(canvas);
+        this.addScoreDisplay(canvas);
+
+        engine.setGame(this); 
 
         canvas.onMouseDown(e -> {handler.mousePressed(e);
                 if (currentCoo != null && e.getPosition().getX() < 200 && !currentCoo.isLaunch()) {
@@ -186,6 +192,11 @@ public class Game {
     private void loadLevel(int index){
         currentLevelIndex = index;
 
+        score = 0;
+        if (scoreText != null) {
+            scoreText.setText("Score: 0");
+        }
+
         if (level != null) {
             canvas.remove(level.getEntityGroup());
         }
@@ -263,5 +274,21 @@ public class Game {
         }
 
         lastMovingTime = System.currentTimeMillis();
+    }
+
+    private void addScoreDisplay(CanvasWindow canvas) {
+        scoreText = new GraphicsText("Score: 0", 100, 150);
+        canvas.add(scoreText);
+    }
+
+    public void updateScore(int points) {
+        score += points;
+        if (scoreText != null) {
+            scoreText.setText("Score: " + score);
+        }
+    }
+
+    public int getScore() {
+        return score;
     }
 }

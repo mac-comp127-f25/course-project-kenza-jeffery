@@ -15,6 +15,8 @@ public class PhysicEngine {
     private static final double DAMAGE_THRESHOLD = 50.0; 
     private static final double DAMAGE_MULTIPLIER = 0.8;
     private static final int COLLISION_ITERATIONS = 2;
+
+    private Game game;
     
     private List<Coo> coos = new ArrayList<>();
     private List<Knight> knights = new ArrayList<>();
@@ -23,6 +25,10 @@ public class PhysicEngine {
     private double dt = 1.0 / 60.0;
     
     public PhysicEngine() {
+    }
+
+    public void setGame(Game game){
+        this.game = game;
     }
     
     public void setCoos(List<Coo> coos) {
@@ -536,6 +542,25 @@ public class PhysicEngine {
     }
     
     private void cleanup() {
+
+        int destroyedKnights = 0;
+        for (Knight k : knights) {
+            if (k.isDestroyed()) {
+                destroyedKnights += k.getScore();
+            }
+        }
+        
+        int destroyedBoxes = 0;
+        for (Box b : boxes) {
+            if (b.isDestroyed()) {
+                destroyedBoxes += b.getScore();
+            }
+        }
+        
+        if (game != null) {
+            game.updateScore(destroyedKnights + destroyedBoxes );
+        }
+
         knights.removeIf(k -> k.isDestroyed());
         boxes.removeIf(b -> b.isDestroyed());
     }

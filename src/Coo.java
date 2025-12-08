@@ -28,6 +28,8 @@ public class Coo implements Entity {
     
     private long lastHitTime = 0;
     private static final long HIT_COOLDOWN_MS = 150;
+
+    private double score;
     
     public Coo(CooType cooType, double cooX, double cooY, double radius){
         this.cooType = cooType;
@@ -37,6 +39,7 @@ public class Coo implements Entity {
         this.velocity = new Vector2D(0, 0);
         this.mass = cooType.getMass();
         this.hp = 100.0; 
+        this.score = cooType.getScore();
 
         fullCoo = new GraphicsGroup(cooX - radius, cooY - radius);
 
@@ -104,6 +107,10 @@ public class Coo implements Entity {
 
     public double getHp(){
         return hp;
+    }
+
+    public double getScore(){
+        return score;
     }
 
     public double getMass(){

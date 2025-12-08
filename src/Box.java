@@ -25,6 +25,8 @@ public class Box implements Entity {
     private boolean isFlashing = false;
     private long flashEndTime = 0;
     private Color originalColor;
+
+    private double score;
     
     public Box(MaterialType materialType, double boxX, double boxY, double width, double height) {
         this.materialType = materialType;
@@ -35,6 +37,7 @@ public class Box implements Entity {
         this.hp = materialType.getHp();
         this.mass = materialType.getMass() * (width * height / 2000.0);
         this.velocity = new Vector2D(0, 0);
+        this.score = materialType.getScore();
         
         fullBox = new GraphicsGroup(boxX, boxY);
         
@@ -80,6 +83,10 @@ public class Box implements Entity {
     
     public double getHeight() {
         return height;
+    }
+
+    public double getScore(){
+        return score;
     }
     
     public double getRadius() {

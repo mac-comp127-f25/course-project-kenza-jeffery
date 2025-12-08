@@ -24,6 +24,8 @@ public class Knight implements Entity {
     private boolean isStatic = true;
     private boolean isDestroyed = false;
 
+    private double score;
+
     private long lastHitTime = 0;
     private static final long HIT_COOLDOWN_MS = 120;
     private boolean isFlashing = false;
@@ -37,6 +39,7 @@ public class Knight implements Entity {
         this.radius = radius;
         this.mass = knightType.getMass();
         this.hp = knightType.getHp();
+        this.score = knightType.getScore();
 
         fullKnight = new GraphicsGroup(knightX - radius, knightY - radius);
 
@@ -83,6 +86,10 @@ public class Knight implements Entity {
 
     public double getHp(){
         return hp;
+    }
+
+    public double getScore(){
+        return score;
     }
 
     public double getRadius(){

@@ -120,6 +120,8 @@ public class Level {
         Coo coo4 = new Coo(CooType.regularCoo, 460, waitingCooY, cooRadius);
 
         Knight knight1 = new Knight(KnightType.basicKnight, 1080, 640, 20);
+        Knight knight2 = new Knight(KnightType.basicKnight, 1080, 500, 20);
+        Knight knight3 = new Knight(KnightType.basicKnight, 1080, 120, 20);
 
         Box box1 = new Box(MaterialType.WOOD, 970, 680, 50, 20);
         Box box2 = new Box(MaterialType.WOOD, 980, 640, 50, 20);
@@ -142,7 +144,13 @@ public class Level {
         Box box14 = new Box(MaterialType.STONE, 950, 500, 20, 200);
         Box box15 = new Box(MaterialType.STONE, 1190, 500, 20, 200);
 
-        Box box16 = new Box(MaterialType.WOOD, 970, 600, 300, 20);
+        Box box16 = new Box(MaterialType.WOOD, 950, 300, 260, 20);
+
+        Box box17 = new Box(MaterialType.STONE, 1040, 200, 80, 20);
+        Box box18 = new Box(MaterialType.ICE, 1050, 180, 20, 50);
+        Box box19 = new Box(MaterialType.ICE, 1090, 180, 20, 50);
+        Box box20 = new Box(MaterialType.WOOD, 1055, 140, 50, 20);
+
         
        
         
@@ -160,6 +168,7 @@ public class Level {
         boxes.add(box7);
         boxes.add(box8);
         
+        
         boxes.add(box9);
         boxes.add(box10);
         boxes.add(box11);
@@ -168,6 +177,12 @@ public class Level {
         boxes.add(box14);
         boxes.add(box15);
         boxes.add(box16);
+        boxes.add(box17);
+        boxes.add(box18);
+        boxes.add(box19);
+        boxes.add(box20);
+
+        
        
         // boxes.add(box5);
 
@@ -177,6 +192,8 @@ public class Level {
         coos.add(coo4);
 
         knights.add(knight1);
+        knights.add(knight2);
+        knights.add(knight3);
     }
 
     private void setupThirdLevel(){

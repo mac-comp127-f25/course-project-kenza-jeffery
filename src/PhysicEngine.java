@@ -169,7 +169,9 @@ public class PhysicEngine {
             
             for (int j = i + 1; j < boxes.size(); j++) {
                 Box b2 = boxes.get(j);
-                if (b2.isDestroyed()) continue;
+                if (b2.isDestroyed()) {
+                    continue;
+                }
                 
                 if (boxBoxCollision(b1, b2)) {
                     resolveBoxBox(b1, b2);

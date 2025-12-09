@@ -70,7 +70,7 @@ public class Game {
         engine.setGame(this); 
 
         canvas.onMouseDown(e -> {handler.mousePressed(e);
-                if (currentCoo != null && e.getPosition().getX() < 200 && !currentCoo.isLaunch()) {
+                if (currentCoo != null && e.getPosition().getX() < 300 && !currentCoo.isLaunch()) {
                         currentCoo.setDragging(true);
                     }
                 });

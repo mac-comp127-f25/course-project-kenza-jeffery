@@ -38,7 +38,7 @@ public class Coo implements Entity {
         this.radius = radius;
         this.velocity = new Vector2D(0, 0);
         this.mass = cooType.getMass();
-        this.hp = 100.0; 
+        this.hp = 10000.0; 
         this.score = cooType.getScore();
 
         fullCoo = new GraphicsGroup(cooX - radius, cooY - radius);

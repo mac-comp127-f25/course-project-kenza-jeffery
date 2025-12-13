@@ -36,8 +36,7 @@ public class Level {
             case forth:
                 this.setupForthLevel();
                 break;
-            case fifth:
-                this.setupFifthLevel();
+            default:
                 break;
         }
 
@@ -342,10 +341,6 @@ public class Level {
         knights.add(knight4);
         knights.add(knight5);
         knights.add(knight6);
-    }
-
-    private void setupFifthLevel(){
-        
     }
 
     public void addToEntityGroup(){

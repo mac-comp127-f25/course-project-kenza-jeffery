@@ -181,12 +181,10 @@ public class Game {
         Level2.setPosition(levelButtonBeginX, levelButtonBeginY + 50);
         Level3.setPosition(levelButtonBeginX, levelButtonBeginY + 100);
         Level4.setPosition(levelButtonBeginX, levelButtonBeginY + 150);
-        Level5.setPosition(levelButtonBeginX, levelButtonBeginY + 200);
         canvas.add(Level1);
         canvas.add(Level2);
         canvas.add(Level3);
         canvas.add(Level4);
-        canvas.add(Level5);
     }
 
     private void loadLevel(int index){

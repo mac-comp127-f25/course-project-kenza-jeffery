@@ -12,3 +12,4 @@ Known Issues:
 One limitaion we adknowldege is if the vector line that maps out the trajectory of the coo currently being used goes off screen the coo may not be launched the way the player intended. 
 
 Societal Impact: 
+This game is intended to be used with a dragging motion on a mouse based on the limitations of Kilt Graphics and the development of it on a laptop. This may be restricting for someone who has limited hand motion, does not have fingers. or hands. 

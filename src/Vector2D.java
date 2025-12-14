@@ -1,3 +1,11 @@
+/**
+ * Vector2D represents a two-dimensional mathematical vector.
+ * 
+ * It is used throughout the program to describe positions,
+ * velocities, and directional quantities in a clear and
+ * reusable way.
+ */
+
 public class Vector2D {
     private double x;
     private double y;

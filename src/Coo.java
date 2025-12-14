@@ -5,6 +5,13 @@ import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Rectangle;
 
+/**
+ * Coo represents a projectile controlled by the player.
+ * 
+ * A Coo can be dragged, launched, and simulated by the physics engine,
+ * transitioning through different states during gameplay.
+ */
+
 public class Coo implements Entity {
 
     private CooType cooType;

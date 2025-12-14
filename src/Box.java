@@ -2,6 +2,14 @@ import java.awt.Color;
 import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.Rectangle;
 
+/**
+ * Box represents a physical obstacle in the game world.
+ * 
+ * Boxes participate in collision detection and can influence
+ * the movement of other entities during the physics simulation.
+ */
+
+
 public class Box implements Entity {
     private MaterialType materialType;
     private double boxX;

@@ -1,3 +1,15 @@
+/**
+ * CooType defines the different types of projectiles in the game.
+ * 
+ * Each CooType stores the basic properties of a Coo, such as
+ * its launch speed, mass, special ability value, and the score
+ * awarded when it is used effectively.
+ * 
+ * Using an enum makes it easy to add new Coo types without
+ * changing the rest of the game logic.
+ */
+
+
 public enum CooType {
     regularCoo(50, 0, 2, 2000),
     speedyCoo(100, 0, 1, 2500),

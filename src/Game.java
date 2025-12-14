@@ -9,6 +9,12 @@ import edu.macalester.graphics.Image;
 
 import edu.macalester.graphics.ui.Button;
 
+/**
+ * Game is the main controller of the program.
+ * It coordinates user input, level loading, and overall game flow.
+ * Rendering and physics logic are delegated to other classes.
+ */
+
 public class Game {
     public static CanvasWindow canvas;
     private static Background background;
@@ -39,7 +45,6 @@ public class Game {
     private Button Level2 = new Button("Level 2");
     private Button Level3 = new Button("Level 3");
     private Button Level4 = new Button("Level 4");
-    private Button Level5 = new Button("Level 5");
 
     private double levelButtonBeginX = 1150;
     private double levelButtonBeginY = 50;
@@ -52,8 +57,7 @@ public class Game {
         DifLevel.first,
         DifLevel.second,
         DifLevel.third,
-        DifLevel.forth,
-        DifLevel.fifth
+        DifLevel.forth
     );
 
     public static void main(String[] args) {
@@ -116,10 +120,6 @@ public class Game {
 
         Level4.onClick(() -> {
             this.loadLevel(3);
-        });
-
-        Level5.onClick(() -> {
-            this.loadLevel(4);
         });
 
         this.runGame();
@@ -186,6 +186,11 @@ public class Game {
         canvas.add(Level3);
         canvas.add(Level4);
     }
+
+    /**
+     * Loads a level by index and resets all game state associated
+     * with the previous level, including entities, score, and UI.
+     */
 
     private void loadLevel(int index){
         currentLevelIndex = index;

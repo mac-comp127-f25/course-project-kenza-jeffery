@@ -1,3 +1,11 @@
+/**
+ * MaterialType describes the physical materials used for obstacles.
+ * 
+ * Each material has different durability, mass, and score value,
+ * which affects how objects behave during collisions and how
+ * rewarding they are to destroy.
+ */
+
 public enum MaterialType{
     WOOD(25, 3, 500), 
     STONE(50, 6, 1000), 

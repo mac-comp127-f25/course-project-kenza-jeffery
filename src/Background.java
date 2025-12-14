@@ -1,5 +1,12 @@
 import edu.macalester.graphics.Image;
 
+/**
+ * Background manages the static visual elements of the game.
+ * 
+ * It loads and positions background imagery and decorative objects
+ * without participating in gameplay logic or physics simulation.
+ */
+
 public class Background {
     private Image background;
 

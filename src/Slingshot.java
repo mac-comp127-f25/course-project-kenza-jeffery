@@ -4,6 +4,13 @@ import edu.macalester.graphics.GraphicsGroup;
 import java.awt.Color;
 import edu.macalester.graphics.Rectangle;
 
+/**
+ * Slingshot represents the visual launcher used by the player.
+ * 
+ * It provides a fixed visual reference point for aiming
+ * but does not control physics or projectile motion directly.
+ */
+
 public class Slingshot {
     private int x = 185;
     private int y = 550;

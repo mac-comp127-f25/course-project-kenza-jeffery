@@ -1,3 +1,11 @@
+/**
+ * KnightType defines the different kinds of enemies in the game.
+ * 
+ * Each KnightType specifies how tough the knight is (health and mass),
+ * whether it has any special behavior, and how many points the player
+ * earns by defeating it.
+ */
+
 public enum KnightType {
     basicKnight(30, 0, 3, 1000),
     explosiveKnight(30, 20, 5, 2000),

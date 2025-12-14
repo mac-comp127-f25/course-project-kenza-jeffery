@@ -5,6 +5,13 @@ import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Rectangle;
 
+/**
+ * Knight represents a destructible target within a level.
+ * 
+ * Knights interact with projectiles through collisions
+ * and contribute to the player's score when eliminated.
+ */
+
 public class Knight implements Entity {
 
     private KnightType knightType;

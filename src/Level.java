@@ -3,6 +3,14 @@ import java.util.List;
 
 import edu.macalester.graphics.GraphicsGroup;
 
+/**
+ * Level represents a single playable stage in the game.
+ * 
+ * It encapsulates all entities belonging to the level,
+ * including slingshot, coo, and knight,
+ * and provides structured access to them for other systems.
+ */
+
 public class Level {
     private List<Box> boxes = new ArrayList<>();
     private List<Coo> coos = new ArrayList<>();

@@ -1,7 +1,26 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * PhysicEngine is responsible for all physics-related updates in the game.
+ * 
+ * It handles gravity, motion integration, collision detection and resolution,
+ * boundary constraints, and damage calculation for all dynamic entities.
+ * 
+ * This class intentionally keeps the physics simple and deterministic
+ * (no external libraries) to maintain predictable gameplay and performance.
+ * 
+ * Rendering and user input are handled elsewhere; this class focuses purely
+ * on simulation logic.
+ */
+
+
 public class PhysicEngine {
+
+    // --- Physics tuning constants ---
+    // Values are chosen empirically to balance realism and enjoyable gameplay
+    // GRAVITY, RESTITUTION, and FRICTION are intentionally exaggerated
+    // to make collisions visually satisfying and responsive
 
     private static final double GRAVITY = 170.0;
     private static final double GROUND_Y = 700.0;
@@ -16,13 +35,13 @@ public class PhysicEngine {
     private static final double DAMAGE_MULTIPLIER = 0.8;
     private static final int COLLISION_ITERATIONS = 2;
 
-    private Game game;
+    private Game game; // Reference to the main Game object, used only for score updates
     
     private List<Coo> coos = new ArrayList<>();
     private List<Knight> knights = new ArrayList<>();
     private List<Box> boxes = new ArrayList<>();
     
-    private double dt = 1.0 / 60.0;
+    private double dt = 1.0 / 60.0; // Fixed timestep for physics updates (60 FPS)
     
     public PhysicEngine() {
     }
@@ -56,7 +75,18 @@ public class PhysicEngine {
     public void removeCoo(Coo coo) {
         coos.remove(coo);
     }
-    
+
+    /**
+     * Advances the physics simulation by one frame.
+     * 
+     * Update order:
+     * 1. Apply forces and integrate motion
+     * 2. Check structural support for static entities
+     * 3. Resolve collisions (multiple passes for stability)
+     * 4. Enforce world boundaries
+     * 5. Remove destroyed entities and update score
+     */
+
     public void update() {
 
         updateAllEntities();
@@ -70,6 +100,14 @@ public class PhysicEngine {
         
         cleanup();
     }
+
+    /**
+     * Applies gravity and air resistance, then updates positions
+     * for all non-static, non-destroyed entities.
+     * 
+     * Each entity type is handled explicitly to keep behavior clear
+     * and avoid over-complicating the Entity interface.
+     */
     
     private void updateAllEntities() {
 
@@ -103,7 +141,17 @@ public class PhysicEngine {
             }
         }
     }
-    
+
+    /**
+     * Detects and resolves all collisions between entities.
+     * 
+     * Collisions are grouped by type (circle-circle, circle-box, box-box)
+     * for clarity and simpler resolution logic.
+     * 
+     * Multiple iterations are used to improve stability when many
+     * objects overlap in a single frame.
+     */
+
     private void handleAllCollisions() {
         // Coo vs Knight
         for (Coo coo : new ArrayList<>(coos)) {
@@ -179,6 +227,8 @@ public class PhysicEngine {
             }
         }
     }
+
+    // Simple circle-circle intersection test using squared distance
     
     private boolean circleCircleCollision(Entity e1, Entity e2) {
         Vector2D pos1 = e1.getPosition();
@@ -192,6 +242,8 @@ public class PhysicEngine {
         
         return distSq < radiusSum * radiusSum;
     }
+
+    // Circle-AABB collision using closest-point projection
     
     private boolean circleBoxCollision(Entity circle, Box box) {
         Vector2D circlePos = circle.getPosition();
@@ -209,6 +261,8 @@ public class PhysicEngine {
         
         return (dx * dx + dy * dy) < (radius * radius);
     }
+
+    // Axis-aligned bounding box (AABB) collision test
     
     private boolean boxBoxCollision(Box b1, Box b2) {
         Vector2D pos1 = b1.getPosition();
@@ -222,6 +276,17 @@ public class PhysicEngine {
         return Math.abs(pos1.getX() - pos2.getX()) < (hw1 + hw2) &&
                Math.abs(pos1.getY() - pos2.getY()) < (hh1 + hh2);
     }
+
+    /**
+     * Resolves a collision between two circular entities.
+     * 
+     * Handles:
+     * - Positional correction to remove overlap
+     * - Impulse-based velocity response
+     * - Optional damage calculation based on impact speed
+     * 
+     * Static entities are treated as having infinite mass.
+     */
     
     private void resolveCircleCircle(Entity e1, Entity e2, boolean applyDamage) {
         Vector2D pos1 = e1.getPosition();
@@ -322,7 +387,14 @@ public class PhysicEngine {
             }
         }
     }
-    
+
+    /**
+     * Resolves a collision between a circular entity and a box.
+     * 
+     * Uses surface normals derived from the closest contact point.
+     * Boxes may become dynamic if impacted with sufficient force.
+     */
+
     private void resolveCircleBox(Entity circle, Box box, boolean applyDamage) {
         Vector2D circlePos = circle.getPosition();
         Vector2D boxPos = box.getPosition();
@@ -462,7 +534,12 @@ public class PhysicEngine {
             b2.applyImpulse(normal.mul(-j));
         }
     }
-    
+
+    /**
+     * Enforces world boundaries and transitions slow-moving entities
+     * into a static resting state to prevent jitter.
+     */
+
     private void handleAllBoundaries() {
         for (Coo coo : coos) {
             if (coo.isLaunch() && !coo.isDestroyed()) {
@@ -542,7 +619,14 @@ public class PhysicEngine {
             }
         }
     }
-    
+
+    /**
+     * Removes destroyed entities and aggregates score contributions.
+     * 
+     * Score updates are centralized here to avoid double-counting
+     * during collision resolution.
+     */
+
     private void cleanup() {
 
         int destroyedKnights = 0;
@@ -566,7 +650,14 @@ public class PhysicEngine {
         knights.removeIf(k -> k.isDestroyed());
         boxes.removeIf(b -> b.isDestroyed());
     }
-    
+
+    /**
+     * Checks whether static entities are still supported from below.
+     * 
+     * If support is lost (e.g. structure collapses), the entity
+     * becomes dynamic again and resumes falling.
+     */
+
     private void checkSupport() {
         for (Box box : boxes) {
             if (box.isDestroyed() || !box.isStatic()) continue;

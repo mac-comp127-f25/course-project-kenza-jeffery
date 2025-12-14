@@ -1,6 +1,12 @@
 import edu.macalester.graphics.GraphicsObject;
 import edu.macalester.graphics.Rectangle;
 
+/**
+ * Entity represents any interactive object in the game world
+ * that participates in physics and collision handling.
+ * Not all methods are used equally by every implementation.
+ */
+
 public interface Entity {
     double getAngle();
     double getWidth();

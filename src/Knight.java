@@ -7,7 +7,7 @@ import edu.macalester.graphics.Rectangle;
 
 /**
  * Knight represents a destructible target within a level.
- * 
+ **
  * Knights interact with projectiles through collisions
  * and contribute to the player's score when eliminated.
  */
